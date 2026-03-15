@@ -1,10 +1,12 @@
+import { IEntity } from "../interfaces/IEntity";
+
 /**
  * Generic abstract collection class that manages a set of domain objects.
  * Provides basic CRUD operations and serialization utilities.
  *
  * @typeParam T - The type of objects stored in the collection.
  */
-export abstract class Collection<T extends { id: string }> {
+export abstract class Collection<T extends IEntity> {
   /** Internal list of stored items */
   protected items: T[] = [];
 
@@ -59,8 +61,20 @@ export abstract class Collection<T extends { id: string }> {
 
   /**
    * Converts the collection into a JSON-serializable array.
+   * Removes leading underscores from property names.
    */
-  toJSON(): T[] {
-    return [...this.items];
+  toJSON(): any[] {
+    return this.items.map((item) => {
+      const clean: any = {};
+
+      for (const key in item) {
+        // key = "_id" → cleanKey = "id"
+        const cleanKey = key.startsWith("_") ? key.substring(1) : key;
+        clean[cleanKey] = (item as any)[key];
+      }
+
+      return clean;
+    });
   }
+
 }

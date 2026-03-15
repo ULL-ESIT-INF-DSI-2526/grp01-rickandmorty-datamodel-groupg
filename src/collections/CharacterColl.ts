@@ -3,32 +3,47 @@ import { Character } from "../models/Character.js";
 
 /**
  * Specialized collection for managing Character entities.
- * Provides advanced search and sorting utilities.
  */
 export class CharacterColl extends Collection<Character> {
   /**
    * Finds all characters belonging to a specific species.
-   * @param speciesId - The ID of the species.
+   * @param speciesId - The species identifier.
    */
   findBySpecies(speciesId: string): Character[] {
     return this.getAll().filter((c) => c.speciesId === speciesId);
   }
 
   /**
-   * Finds all characters with a specific affiliation.
-   * @param affiliation - The affiliation or group name.
+   * Finds all characters originating from a specific dimension.
+   * @param dimensionId - The origin dimension identifier.
+   */
+  findByOriginDimension(dimensionId: string): Character[] {
+    return this.getAll().filter((c) => c.originDimensionId === dimensionId);
+  }
+
+  /**
+   * Finds all characters with a given status.
+   * @param status - Character status (Alive, Dead, Unknown, etc.).
+   */
+  findByStatus(status: string): Character[] {
+    return this.getAll().filter((c) => c.status === status);
+  }
+
+  /**
+   * Finds all characters belonging to a specific affiliation.
+   * @param affiliation - Group or faction name.
    */
   findByAffiliation(affiliation: string): Character[] {
     return this.getAll().filter((c) => c.affiliation === affiliation);
   }
 
   /**
-   * Returns characters sorted by intelligence.
-   * @param desc - If true, sorts from highest to lowest.
+   * Orders characters by intelligence.
+   * @param descending - Whether to sort in descending order.
    */
-  orderByIntelligence(desc = false): Character[] {
+  orderByIntelligence(descending = false): Character[] {
     return [...this.getAll()].sort((a, b) =>
-      desc ? b.intelligence - a.intelligence : a.intelligence - b.intelligence,
+      descending ? b.intelligence - a.intelligence : a.intelligence - b.intelligence
     );
   }
 }

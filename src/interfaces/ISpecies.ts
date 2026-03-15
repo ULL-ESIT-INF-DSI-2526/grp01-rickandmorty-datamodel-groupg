@@ -5,5 +5,9 @@ import { IEntity } from "./IEntity.js";
  */
 export interface ISpecies extends IEntity {
   /** Planet where the species originated */
-  planetOfOrigin: string;
+  origin: string;
+  /** Type of species */
+  type: string;
+  /** Average time span of the species */
+  averageLifespan: number;
 }

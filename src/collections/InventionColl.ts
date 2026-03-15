@@ -6,20 +6,28 @@ import { Invention } from "../models/Invention.js";
  */
 export class InventionColl extends Collection<Invention> {
   /**
-   * Finds all inventions with a specific danger level.
-   * @param level - Danger level (1–10).
+   * Finds all inventions created by a specific character.
+   * @param inventorId - The ID of the inventor.
    */
-  findByDangerLevel(level: number): Invention[] {
-    return this.getAll().filter((i) => i.dangerLevel === level);
+  findByInventor(inventorId: string): Invention[] {
+    return this.getAll().filter((i) => i.inventorId === inventorId);
   }
 
   /**
-   * Returns inventions sorted by danger level.
-   * @param desc - If true, sorts from highest to lowest.
+   * Finds all inventions of a specific type.
+   * @param type - Invention category (Weapon, Device, etc.).
    */
-  orderByDanger(desc = false): Invention[] {
+  findByType(type: string): Invention[] {
+    return this.getAll().filter((i) => i.type === type);
+  }
+
+  /**
+   * Orders inventions by danger level.
+   * @param descending - Whether to sort in descending order.
+   */
+  orderByDanger(descending = false): Invention[] {
     return [...this.getAll()].sort((a, b) =>
-      desc ? b.dangerLevel - a.dangerLevel : a.dangerLevel - b.dangerLevel,
+      descending ? b.dangerLevel - a.dangerLevel : a.dangerLevel - b.dangerLevel
     );
   }
 }

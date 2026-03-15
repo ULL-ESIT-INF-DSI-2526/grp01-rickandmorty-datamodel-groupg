@@ -3,12 +3,11 @@ import { Dimension } from "../models/Dimension.js";
 
 /**
  * Specialized collection for managing Dimension entities.
- * Provides filtering utilities based on dimension properties.
  */
 export class DimensionColl extends Collection<Dimension> {
   /**
    * Finds all dimensions with a specific status.
-   * @param status - The status to filter by.
+   * @param status - Dimension status (Active, Destroyed, etc.).
    */
   findByStatus(status: string): Dimension[] {
     return this.getAll().filter((d) => d.status === status);
@@ -16,9 +15,19 @@ export class DimensionColl extends Collection<Dimension> {
 
   /**
    * Finds all dimensions with a specific technological level.
-   * @param level - The technological level (1–10).
+   * @param techLevel - Tech level (1–10).
    */
-  findByTechLevel(level: number): Dimension[] {
-    return this.getAll().filter((d) => d.techLevel === level);
+  findByTechLevel(techLevel: number): Dimension[] {
+    return this.getAll().filter((d) => d.techLevel === techLevel);
+  }
+
+  /**
+   * Orders dimensions by technological level.
+   * @param descending - Whether to sort in descending order.
+   */
+  orderByTechLevel(descending = false): Dimension[] {
+    return [...this.getAll()].sort((a, b) =>
+      descending ? b.techLevel - a.techLevel : a.techLevel - b.techLevel
+    );
   }
 }

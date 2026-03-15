@@ -41,19 +41,11 @@ export class DbManager {
   /** Lowdb instance using the typed DbSchema */
   private db: Low<DbSchema>;
 
-  /** Collection of Character model instances */
+  /** Collections */
   public readonly characters = new CharacterColl();
-
-  /** Collection of Dimension model instances */
   public readonly dimensions = new DimensionColl();
-
-  /** Collection of Species model instances */
   public readonly species = new SpeciesColl();
-
-  /** Collection of Location model instances */
   public readonly locations = new LocationColl();
-
-  /** Collection of Invention model instances */
   public readonly inventions = new InventionColl();
 
   /**
@@ -76,8 +68,7 @@ export class DbManager {
   async load(): Promise<void> {
     await this.db.read();
 
-    const { characters, dimensions, species, locations, inventions } =
-      this.db.data;
+    const { characters, dimensions, species, locations, inventions } = this.db.data;
 
     this.characters.load(
       characters.map(
@@ -90,34 +81,64 @@ export class DbManager {
             c.originDimensionId,
             c.status,
             c.affiliation,
-            c.intelligence,
-          ),
-      ),
+            c.intelligence
+          )
+      )
     );
 
     this.dimensions.load(
       dimensions.map(
         (d) =>
-          new Dimension(d.id, d.name, d.description, d.status, d.techLevel),
-      ),
+          new Dimension(
+            d.id,
+            d.name,
+            d.description,
+            d.status,
+            d.techLevel
+          )
+      )
     );
 
     this.species.load(
       species.map(
-        (s) => new Species(s.id, s.name, s.description, s.planetOfOrigin),
-      ),
+        (s) =>
+          new Species(
+            s.id,
+            s.name,
+            s.description,
+            s.origin,
+            s.type,
+            s.averageLifespan
+          )
+      )
     );
 
     this.locations.load(
       locations.map(
-        (l) => new Location(l.id, l.name, l.description, l.dimensionId),
-      ),
+        (l) =>
+          new Location(
+            l.id,
+            l.name,
+            l.description,
+            l.type,
+            l.dimensionId,
+            l.population
+          )
+      )
     );
 
     this.inventions.load(
       inventions.map(
-        (i) => new Invention(i.id, i.name, i.description, i.dangerLevel),
-      ),
+        (i) =>
+          new Invention(
+            i.id,
+            i.name,
+            i.description,
+            i.inventorId,
+            i.type,
+            i.dangerLevel
+          )
+      )
     );
   }
 

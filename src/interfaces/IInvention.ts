@@ -6,4 +6,8 @@ import { IEntity } from "./IEntity.js";
 export interface IInvention extends IEntity {
   /** Danger level (1–10) */
   dangerLevel: number;
+  /** Identification string of invention */
+  inventorId: string;
+  /** Type of invention */
+  type: string;
 }
