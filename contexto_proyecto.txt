@@ -1,0 +1,850 @@
+ESTRUCTURA DEL PROYECTO Y CÓDIGO FUENTE
+=========================================
+
+
+--- ARCHIVO: /src/collections/CharacterColl.ts ---
+-------------------------------------------
+import { Collection } from "./Collection.js";
+import { Character } from "../models/Character.js";
+
+/**
+ * Specialized collection for managing Character entities.
+ * Provides advanced search and sorting utilities.
+ */
+export class CharacterColl extends Collection<Character> {
+  /**
+   * Finds all characters belonging to a specific species.
+   * @param speciesId - The ID of the species.
+   */
+  findBySpecies(speciesId: string): Character[] {
+    return this.getAll().filter((c) => c.speciesId === speciesId);
+  }
+
+  /**
+   * Finds all characters with a specific affiliation.
+   * @param affiliation - The affiliation or group name.
+   */
+  findByAffiliation(affiliation: string): Character[] {
+    return this.getAll().filter((c) => c.affiliation === affiliation);
+  }
+
+  /**
+   * Returns characters sorted by intelligence.
+   * @param desc - If true, sorts from highest to lowest.
+   */
+  orderByIntelligence(desc = false): Character[] {
+    return [...this.getAll()].sort((a, b) =>
+      desc ? b.intelligence - a.intelligence : a.intelligence - b.intelligence,
+    );
+  }
+}
+
+-------------------------------------------
+
+--- ARCHIVO: /src/collections/Collection.ts ---
+-------------------------------------------
+/**
+ * Generic abstract collection class that manages a set of domain objects.
+ * Provides basic CRUD operations and serialization utilities.
+ *
+ * @typeParam T - The type of objects stored in the collection.
+ */
+export abstract class Collection<T extends { id: string }> {
+  /** Internal list of stored items */
+  protected items: T[] = [];
+
+  /**
+   * Returns all items in the collection.
+   */
+  getAll(): T[] {
+    return [...this.items];
+  }
+
+  /**
+   * Retrieves an item by its ID.
+   * @param id - The identifier of the item.
+   */
+  getById(id: string): T | undefined {
+    return this.items.find((i) => i.id === id);
+  }
+
+  /**
+   * Adds a new item to the collection.
+   * Throws an error if an item with the same ID already exists.
+   */
+  add(item: T): void {
+    if (this.getById(item.id))
+      throw new Error(`Item with id ${item.id} already exists`);
+    this.items.push(item);
+  }
+
+  /**
+   * Removes an item by its ID.
+   */
+  remove(id: string): void {
+    this.items = this.items.filter((i) => i.id !== id);
+  }
+
+  /**
+   * Replaces an existing item with a new one.
+   * Throws an error if the item does not exist.
+   */
+  replace(item: T): void {
+    const index = this.items.findIndex((i) => i.id === item.id);
+    if (index === -1) throw new Error("Item not found");
+    this.items[index] = item;
+  }
+
+  /**
+   * Loads items from an external source.
+   */
+  load(items: T[]): void {
+    this.items = [...items];
+  }
+
+  /**
+   * Converts the collection into a JSON-serializable array.
+   */
+  toJSON(): T[] {
+    return [...this.items];
+  }
+}
+
+-------------------------------------------
+
+--- ARCHIVO: /src/collections/DimensionColl.ts ---
+-------------------------------------------
+import { Collection } from "./Collection.js";
+import { Dimension } from "../models/Dimension.js";
+
+/**
+ * Specialized collection for managing Dimension entities.
+ * Provides filtering utilities based on dimension properties.
+ */
+export class DimensionColl extends Collection<Dimension> {
+  /**
+   * Finds all dimensions with a specific status.
+   * @param status - The status to filter by.
+   */
+  findByStatus(status: string): Dimension[] {
+    return this.getAll().filter((d) => d.status === status);
+  }
+
+  /**
+   * Finds all dimensions with a specific technological level.
+   * @param level - The technological level (1–10).
+   */
+  findByTechLevel(level: number): Dimension[] {
+    return this.getAll().filter((d) => d.techLevel === level);
+  }
+}
+
+-------------------------------------------
+
+--- ARCHIVO: /src/collections/InventionColl.ts ---
+-------------------------------------------
+import { Collection } from "./Collection.js";
+import { Invention } from "../models/Invention.js";
+
+/**
+ * Specialized collection for managing Invention entities.
+ */
+export class InventionColl extends Collection<Invention> {
+  /**
+   * Finds all inventions with a specific danger level.
+   * @param level - Danger level (1–10).
+   */
+  findByDangerLevel(level: number): Invention[] {
+    return this.getAll().filter((i) => i.dangerLevel === level);
+  }
+
+  /**
+   * Returns inventions sorted by danger level.
+   * @param desc - If true, sorts from highest to lowest.
+   */
+  orderByDanger(desc = false): Invention[] {
+    return [...this.getAll()].sort((a, b) =>
+      desc ? b.dangerLevel - a.dangerLevel : a.dangerLevel - b.dangerLevel,
+    );
+  }
+}
+
+-------------------------------------------
+
+--- ARCHIVO: /src/collections/LocationColl.ts ---
+-------------------------------------------
+import { Collection } from "./Collection.js";
+import { Location } from "../models/Location.js";
+
+/**
+ * Specialized collection for managing Location entities.
+ */
+export class LocationColl extends Collection<Location> {
+  /**
+   * Finds all locations belonging to a specific dimension.
+   * @param dimensionId - The ID of the dimension.
+   */
+  findByDimension(dimensionId: string): Location[] {
+    return this.getAll().filter((l) => l.dimensionId === dimensionId);
+  }
+}
+
+-------------------------------------------
+
+--- ARCHIVO: /src/collections/SpeciesColl.ts ---
+-------------------------------------------
+import { Collection } from "./Collection.js";
+import { Species } from "../models/Species.js";
+
+/**
+ * Specialized collection for managing Species entities.
+ */
+export class SpeciesColl extends Collection<Species> {
+  /**
+   * Finds all species originating from a specific planet.
+   * @param planet - The name of the planet.
+   */
+  findByPlanet(planet: string): Species[] {
+    return this.getAll().filter((s) => s.planetOfOrigin === planet);
+  }
+}
+
+-------------------------------------------
+
+--- ARCHIVO: /src/database/DbManager.ts ---
+-------------------------------------------
+import { Low } from "lowdb";
+import { JSONFile } from "lowdb/node";
+
+import { ICharacter } from "../interfaces/ICharacter.js";
+import { IDimension } from "../interfaces/IDimension.js";
+import { ISpecies } from "../interfaces/ISpecies.js";
+import { ILocation } from "../interfaces/ILocation.js";
+import { IInvention } from "../interfaces/IInvention.js";
+
+import { Character } from "../models/Character.js";
+import { Dimension } from "../models/Dimension.js";
+import { Species } from "../models/Species.js";
+import { Location } from "../models/Location.js";
+import { Invention } from "../models/Invention.js";
+
+import { CharacterColl } from "../collections/CharacterColl.js";
+import { DimensionColl } from "../collections/DimensionColl.js";
+import { SpeciesColl } from "../collections/SpeciesColl.js";
+import { LocationColl } from "../collections/LocationColl.js";
+import { InventionColl } from "../collections/InventionColl.js";
+
+/**
+ * Defines the structure of the JSON database file.
+ * Uses plain DTO interfaces, not model instances.
+ */
+export interface DbSchema {
+  characters: ICharacter[];
+  dimensions: IDimension[];
+  species: ISpecies[];
+  locations: ILocation[];
+  inventions: IInvention[];
+}
+
+/**
+ * Database manager responsible for loading and saving
+ * all multiverse data using Lowdb.
+ *
+ * Converts raw JSON DTOs into fully validated model instances.
+ */
+export class DbManager {
+  /** Lowdb instance using the typed DbSchema */
+  private db: Low<DbSchema>;
+
+  /** Collection of Character model instances */
+  public readonly characters = new CharacterColl();
+
+  /** Collection of Dimension model instances */
+  public readonly dimensions = new DimensionColl();
+
+  /** Collection of Species model instances */
+  public readonly species = new SpeciesColl();
+
+  /** Collection of Location model instances */
+  public readonly locations = new LocationColl();
+
+  /** Collection of Invention model instances */
+  public readonly inventions = new InventionColl();
+
+  /**
+   * Creates a new database manager.
+   * @param path - Path to the JSON file.
+   */
+  constructor(path = "data/database.json") {
+    this.db = new Low<DbSchema>(new JSONFile(path), {
+      characters: [],
+      dimensions: [],
+      species: [],
+      locations: [],
+      inventions: [],
+    });
+  }
+
+  /**
+   * Loads data from the JSON file and converts it into model instances.
+   */
+  async load(): Promise<void> {
+    await this.db.read();
+
+    const { characters, dimensions, species, locations, inventions } =
+      this.db.data;
+
+    this.characters.load(
+      characters.map(
+        (c) =>
+          new Character(
+            c.id,
+            c.name,
+            c.description,
+            c.speciesId,
+            c.originDimensionId,
+            c.status,
+            c.affiliation,
+            c.intelligence,
+          ),
+      ),
+    );
+
+    this.dimensions.load(
+      dimensions.map(
+        (d) =>
+          new Dimension(d.id, d.name, d.description, d.status, d.techLevel),
+      ),
+    );
+
+    this.species.load(
+      species.map(
+        (s) => new Species(s.id, s.name, s.description, s.planetOfOrigin),
+      ),
+    );
+
+    this.locations.load(
+      locations.map(
+        (l) => new Location(l.id, l.name, l.description, l.dimensionId),
+      ),
+    );
+
+    this.inventions.load(
+      inventions.map(
+        (i) => new Invention(i.id, i.name, i.description, i.dangerLevel),
+      ),
+    );
+  }
+
+  /**
+   * Saves the current state of all collections into the JSON file.
+   */
+  async save(): Promise<void> {
+    this.db.data.characters = this.characters.toJSON();
+    this.db.data.dimensions = this.dimensions.toJSON();
+    this.db.data.species = this.species.toJSON();
+    this.db.data.locations = this.locations.toJSON();
+    this.db.data.inventions = this.inventions.toJSON();
+
+    await this.db.write();
+  }
+}
+
+-------------------------------------------
+
+--- ARCHIVO: /src/index.ts ---
+-------------------------------------------
+const myString: string = "Hola Mundo";
+console.log(myString);
+
+-------------------------------------------
+
+--- ARCHIVO: /src/interfaces/ICharacter.ts ---
+-------------------------------------------
+import { IEntity } from "./IEntity.js";
+
+/** Possible life states for a character */
+export type CharacterStatus = "Alive" | "Dead" | "Unknown";
+
+/**
+ * Represents a character in the multiverse.
+ */
+export interface ICharacter extends IEntity {
+  /** ID of the species the character belongs to */
+  speciesId: string;
+
+  /** ID of the character's origin dimension */
+  originDimensionId: string;
+
+  /** Life status of the character */
+  status: CharacterStatus;
+
+  /** Group or faction the character belongs to */
+  affiliation: string;
+
+  /** Intelligence level (1–10) */
+  intelligence: number;
+}
+
+-------------------------------------------
+
+--- ARCHIVO: /src/interfaces/IDimension.ts ---
+-------------------------------------------
+import { IEntity } from "./IEntity.js";
+
+/** Possible states for a dimension */
+export type DimensionStatus = "active" | "destroyed" | "quarantine";
+
+/**
+ * Represents a dimension in the multiverse.
+ * Extends the base IEntity interface.
+ */
+export interface IDimension extends IEntity {
+  /** Current status of the dimension */
+  status: DimensionStatus;
+
+  /** Technological level (1–10) */
+  techLevel: number;
+}
+
+-------------------------------------------
+
+--- ARCHIVO: /src/interfaces/IEntity.ts ---
+-------------------------------------------
+/**
+ * Base interface implemented by all domain entities.
+ * Provides a unique identifier, a name, and a description.
+ */
+export interface IEntity {
+  /** Unique identifier of the entity */
+  id: string;
+
+  /** Human-readable name of the entity */
+  name: string;
+
+  /** Short description of the entity */
+  description: string;
+}
+
+-------------------------------------------
+
+--- ARCHIVO: /src/interfaces/IInvention.ts ---
+-------------------------------------------
+import { IEntity } from "./IEntity.js";
+
+/**
+ * Represents an invention created in the multiverse.
+ */
+export interface IInvention extends IEntity {
+  /** Danger level (1–10) */
+  dangerLevel: number;
+}
+
+-------------------------------------------
+
+--- ARCHIVO: /src/interfaces/ILocation.ts ---
+-------------------------------------------
+import { IEntity } from "./IEntity.js";
+
+/**
+ * Represents a location inside a dimension.
+ */
+export interface ILocation extends IEntity {
+  /** ID of the dimension this location belongs to */
+  dimensionId: string;
+}
+
+-------------------------------------------
+
+--- ARCHIVO: /src/interfaces/ISpecies.ts ---
+-------------------------------------------
+import { IEntity } from "./IEntity.js";
+
+/**
+ * Represents a species in the multiverse.
+ */
+export interface ISpecies extends IEntity {
+  /** Planet where the species originated */
+  planetOfOrigin: string;
+}
+
+-------------------------------------------
+
+--- ARCHIVO: /src/models/Character.ts ---
+-------------------------------------------
+import { ICharacter, CharacterStatus } from "../interfaces/ICharacter.js";
+
+/**
+ * Represents a character in the multiverse.
+ * Validates intelligence, name, and identifiers.
+ */
+export class Character implements ICharacter {
+  constructor(
+    /** @inheritdoc */
+    public readonly id: string,
+
+    /** @inheritdoc */
+    public readonly name: string,
+
+    /** @inheritdoc */
+    public readonly description: string,
+
+    /** @inheritdoc */
+    public readonly speciesId: string,
+
+    /** @inheritdoc */
+    public readonly originDimensionId: string,
+
+    /** @inheritdoc */
+    public readonly status: CharacterStatus,
+
+    /** @inheritdoc */
+    public readonly affiliation: string,
+
+    /** @inheritdoc */
+    public readonly intelligence: number,
+  ) {
+    if (!id.trim()) throw new Error("Character id cannot be empty");
+    if (!name.trim()) throw new Error("Character name cannot be empty");
+    if (intelligence < 1 || intelligence > 10)
+      throw new Error("Intelligence must be between 1 and 10");
+  }
+}
+
+-------------------------------------------
+
+--- ARCHIVO: /src/models/Dimension.ts ---
+-------------------------------------------
+import { IDimension, DimensionStatus } from "../interfaces/IDimension.js";
+
+/**
+ * Represents a dimension in the multiverse.
+ * Performs validation on construction.
+ */
+export class Dimension implements IDimension {
+  constructor(
+    /** @inheritdoc */
+    public readonly id: string,
+
+    /** @inheritdoc */
+    public readonly name: string,
+
+    /** @inheritdoc */
+    public readonly description: string,
+
+    /** @inheritdoc */
+    public readonly status: DimensionStatus,
+
+    /** @inheritdoc */
+    public readonly techLevel: number,
+  ) {
+    if (!id.trim()) throw new Error("Dimension id cannot be empty");
+    if (!name.trim()) throw new Error("Dimension name cannot be empty");
+    if (techLevel < 1 || techLevel > 10)
+      throw new Error("techLevel must be between 1 and 10");
+  }
+}
+
+-------------------------------------------
+
+--- ARCHIVO: /src/models/Invention.ts ---
+-------------------------------------------
+import { IInvention } from "../interfaces/IInvention.js";
+
+/**
+ * Represents an invention in the multiverse.
+ */
+export class Invention implements IInvention {
+  constructor(
+    /** @inheritdoc */
+    public readonly id: string,
+
+    /** @inheritdoc */
+    public readonly name: string,
+
+    /** @inheritdoc */
+    public readonly description: string,
+
+    /** @inheritdoc */
+    public readonly dangerLevel: number,
+  ) {
+    if (dangerLevel < 1 || dangerLevel > 10)
+      throw new Error("dangerLevel must be between 1 and 10");
+  }
+}
+
+-------------------------------------------
+
+--- ARCHIVO: /src/models/Location.ts ---
+-------------------------------------------
+import { ILocation } from "../interfaces/ILocation.js";
+
+/**
+ * Represents a location inside a dimension.
+ */
+export class Location implements ILocation {
+  constructor(
+    /** @inheritdoc */
+    public readonly id: string,
+
+    /** @inheritdoc */
+    public readonly name: string,
+
+    /** @inheritdoc */
+    public readonly description: string,
+
+    /** @inheritdoc */
+    public readonly dimensionId: string,
+  ) {
+    if (!id.trim()) throw new Error("Location id cannot be empty");
+    if (!name.trim()) throw new Error("Location name cannot be empty");
+  }
+}
+
+-------------------------------------------
+
+--- ARCHIVO: /src/models/Species.ts ---
+-------------------------------------------
+import { ISpecies } from "../interfaces/ISpecies.js";
+
+/**
+ * Represents a species in the multiverse.
+ */
+export class Species implements ISpecies {
+  constructor(
+    /** @inheritdoc */
+    public readonly id: string,
+
+    /** @inheritdoc */
+    public readonly name: string,
+
+    /** @inheritdoc */
+    public readonly description: string,
+
+    /** @inheritdoc */
+    public readonly planetOfOrigin: string,
+  ) {
+    if (!id.trim()) throw new Error("Species id cannot be empty");
+    if (!name.trim()) throw new Error("Species name cannot be empty");
+  }
+}
+
+-------------------------------------------
+
+--- ARCHIVO: /tests/collections.spec.ts ---
+-------------------------------------------
+import { describe, test, expect } from "vitest";
+
+import { Character } from "../src/models/Character.js";
+import { CharacterColl } from "../src/collections/CharacterColl.js";
+
+import { Dimension } from "../src/models/Dimension.js";
+import { DimensionColl } from "../src/collections/DimensionColl.js";
+
+import { Species } from "../src/models/Species.js";
+import { SpeciesColl } from "../src/collections/SpeciesColl.js";
+
+import { Location } from "../src/models/Location.js";
+import { LocationColl } from "../src/collections/LocationColl.js";
+
+import { Invention } from "../src/models/Invention.js";
+import { InventionColl } from "../src/collections/InventionColl.js";
+
+describe("Collections", () => {
+  test("CharacterColl basic operations", () => {
+    const coll = new CharacterColl();
+
+    const rick = new Character(
+      "1", "Rick", "Scientist", "sp1", "C-137", "Alive", "Council", 10
+    );
+
+    coll.add(rick);
+
+    expect(coll.getById("1")).toBeDefined();
+    expect(coll.findBySpecies("sp1").length).toBe(1);
+    expect(coll.orderByIntelligence(true)[0].name).toBe("Rick");
+
+    coll.remove("1");
+    expect(coll.getById("1")).toBeUndefined();
+  });
+
+  test("DimensionColl filtering", () => {
+    const coll = new DimensionColl();
+
+    coll.add(new Dimension("d1", "C-137", "Main", "active", 8));
+    coll.add(new Dimension("d2", "Apocalypse", "Dead world", "destroyed", 2));
+
+    expect(coll.findByStatus("active").length).toBe(1);
+    expect(coll.findByTechLevel(8)[0].id).toBe("d1");
+  });
+
+  test("SpeciesColl filtering", () => {
+    const coll = new SpeciesColl();
+
+    coll.add(new Species("s1", "Human", "Earth species", "Earth"));
+    coll.add(new Species("s2", "Gromflomite", "Bug aliens", "Gromflom"));
+
+    expect(coll.findByPlanet("Earth").length).toBe(1);
+  });
+
+  test("LocationColl filtering", () => {
+    const coll = new LocationColl();
+
+    coll.add(new Location("l1", "Citadel", "Central hub", "C-137"));
+    coll.add(new Location("l2", "Earth", "Home", "C-137"));
+
+    expect(coll.findByDimension("C-137").length).toBe(2);
+  });
+
+  test("InventionColl danger sorting", () => {
+    const coll = new InventionColl();
+
+    coll.add(new Invention("i1", "Portal Gun", "Travel device", 9));
+    coll.add(new Invention("i2", "Butter Robot", "Makes butter", 1));
+
+    const sorted = coll.orderByDanger(true);
+    expect(sorted[0].id).toBe("i1");
+  });
+});
+
+-------------------------------------------
+
+--- ARCHIVO: /tests/dbmanager.spec.ts ---
+-------------------------------------------
+import { describe, test, expect } from "vitest";
+import { DbManager } from "../src/database/DbManager.js";
+
+import { Character } from "../src/models/Character.js";
+import { Dimension } from "../src/models/Dimension.js";
+
+import fs from "fs";
+
+describe("DbManager", () => {
+  const testFile = "./data/test-db.json";
+
+  // Clean test file before each run
+  if (fs.existsSync(testFile)) fs.unlinkSync(testFile);
+
+  test("DbManager saves and loads data correctly", async () => {
+    const db = new DbManager(testFile);
+
+    db.characters.add(
+      new Character("1", "Rick", "Scientist", "sp1", "C-137", "Alive", "Council", 10)
+    );
+
+    db.dimensions.add(
+      new Dimension("d1", "C-137", "Main", "active", 8)
+    );
+
+    await db.save();
+
+    const db2 = new DbManager(testFile);
+    await db2.load();
+
+    expect(db2.characters.getById("1")?.name).toBe("Rick");
+    expect(db2.dimensions.getById("d1")?.techLevel).toBe(8);
+  });
+});
+
+-------------------------------------------
+
+--- ARCHIVO: /tests/models.spec.ts ---
+-------------------------------------------
+import { describe, test, expect } from "vitest";
+
+import { Character } from "../src/models/Character.js";
+import { Dimension } from "../src/models/Dimension.js";
+import { Invention } from "../src/models/Invention.js";
+
+describe("Model validation", () => {
+  test("Character rejects invalid intelligence", () => {
+    expect(() => {
+      new Character("1", "Rick", "desc", "sp1", "C-137", "Alive", "Council", 99);
+    }).toThrow();
+  });
+
+  test("Dimension rejects invalid techLevel", () => {
+    expect(() => {
+      new Dimension("d1", "Bad", "desc", "active", 100);
+    }).toThrow();
+  });
+
+  test("Invention rejects invalid dangerLevel", () => {
+    expect(() => {
+      new Invention("i1", "Bad", "desc", 0);
+    }).toThrow();
+  });
+});
+
+-------------------------------------------
+
+--- ARCHIVO: /package.json ---
+-------------------------------------------
+{
+  "name": "grp01-rickandmorty-datamodel-groupg",
+  "version": "1.0.0",
+  "description": "[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/U8NqX9JL)",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc-watch --onSuccess \"node dist/index.js\"",
+    "test": "vitest run",
+    "doc": "typedoc",
+    "coverage": "vitest run --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ULL-ESIT-INF-DSI-2526/grp01-rickandmorty-datamodel-groupg.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/ULL-ESIT-INF-DSI-2526/grp01-rickandmorty-datamodel-groupg/issues"
+  },
+  "homepage": "https://github.com/ULL-ESIT-INF-DSI-2526/grp01-rickandmorty-datamodel-groupg#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "@types/lodash": "^4.17.24",
+    "@types/node": "^25.5.0",
+    "@vitest/coverage-v8": "^4.1.0",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-tsdoc": "^0.5.2",
+    "globals": "^17.4.0",
+    "prettier": "^3.8.1",
+    "tsc-watch": "^7.2.0",
+    "typedoc": "^0.28.17",
+    "typescript-eslint": "^8.57.0",
+    "vitest": "^4.1.0"
+  },
+  "dependencies": {
+    "lowdb": "^7.0.1"
+  }
+}
+
+-------------------------------------------
+
+--- ARCHIVO: /tsconfig.json ---
+-------------------------------------------
+{
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "module": "node16",
+    "moduleResolution": "node16",
+    "target": "es2024",
+    "declaration": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "types": ["node"]
+  },
+  "exclude": [
+    "./tests",
+    "./node_modules",
+    "./dist"
+  ]
+}
+
+-------------------------------------------
