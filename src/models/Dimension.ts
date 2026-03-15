@@ -1,4 +1,4 @@
-import { IDimension, DimensionStatus } from "../interfaces/IDimension";
+import { IDimension, DimensionStatus } from "../interfaces/IDimension.js";
 
 /**
  * Represents a dimension in the multiverse.
@@ -19,7 +19,7 @@ export class Dimension implements IDimension {
     public readonly status: DimensionStatus,
 
     /** @inheritdoc */
-    public readonly techLevel: number
+    public readonly techLevel: number,
   ) {
     if (!id.trim()) throw new Error("Dimension id cannot be empty");
     if (!name.trim()) throw new Error("Dimension name cannot be empty");

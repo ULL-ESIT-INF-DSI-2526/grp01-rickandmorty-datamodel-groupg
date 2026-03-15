@@ -1,4 +1,4 @@
-import { ISpecies } from "../interfaces/ISpecies";
+import { ISpecies } from "../interfaces/ISpecies.js";
 
 /**
  * Represents a species in the multiverse.
@@ -15,7 +15,7 @@ export class Species implements ISpecies {
     public readonly description: string,
 
     /** @inheritdoc */
-    public readonly planetOfOrigin: string
+    public readonly planetOfOrigin: string,
   ) {
     if (!id.trim()) throw new Error("Species id cannot be empty");
     if (!name.trim()) throw new Error("Species name cannot be empty");

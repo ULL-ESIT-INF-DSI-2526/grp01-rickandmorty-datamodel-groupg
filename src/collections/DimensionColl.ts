@@ -1,5 +1,5 @@
-import { Collection } from "./Collection";
-import { Dimension } from "../models/Dimension";
+import { Collection } from "./Collection.js";
+import { Dimension } from "../models/Dimension.js";
 
 /**
  * Specialized collection for managing Dimension entities.
@@ -11,7 +11,7 @@ export class DimensionColl extends Collection<Dimension> {
    * @param status - The status to filter by.
    */
   findByStatus(status: string): Dimension[] {
-    return this.getAll().filter(d => d.status === status);
+    return this.getAll().filter((d) => d.status === status);
   }
 
   /**
@@ -19,6 +19,6 @@ export class DimensionColl extends Collection<Dimension> {
    * @param level - The technological level (1–10).
    */
   findByTechLevel(level: number): Dimension[] {
-    return this.getAll().filter(d => d.techLevel === level);
+    return this.getAll().filter((d) => d.techLevel === level);
   }
 }

@@ -1,4 +1,4 @@
-import { IInvention } from "../interfaces/IInvention";
+import { IInvention } from "../interfaces/IInvention.js";
 
 /**
  * Represents an invention in the multiverse.
@@ -15,7 +15,7 @@ export class Invention implements IInvention {
     public readonly description: string,
 
     /** @inheritdoc */
-    public readonly dangerLevel: number
+    public readonly dangerLevel: number,
   ) {
     if (dangerLevel < 1 || dangerLevel > 10)
       throw new Error("dangerLevel must be between 1 and 10");

@@ -20,7 +20,7 @@ export abstract class Collection<T extends { id: string }> {
    * @param id - The identifier of the item.
    */
   getById(id: string): T | undefined {
-    return this.items.find(i => i.id === id);
+    return this.items.find((i) => i.id === id);
   }
 
   /**
@@ -37,7 +37,7 @@ export abstract class Collection<T extends { id: string }> {
    * Removes an item by its ID.
    */
   remove(id: string): void {
-    this.items = this.items.filter(i => i.id !== id);
+    this.items = this.items.filter((i) => i.id !== id);
   }
 
   /**
@@ -45,7 +45,7 @@ export abstract class Collection<T extends { id: string }> {
    * Throws an error if the item does not exist.
    */
   replace(item: T): void {
-    const index = this.items.findIndex(i => i.id === item.id);
+    const index = this.items.findIndex((i) => i.id === item.id);
     if (index === -1) throw new Error("Item not found");
     this.items[index] = item;
   }

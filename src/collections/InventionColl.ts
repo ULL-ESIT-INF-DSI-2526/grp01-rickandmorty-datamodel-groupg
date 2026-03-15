@@ -1,5 +1,5 @@
-import { Collection } from "./Collection";
-import { Invention } from "../models/Invention";
+import { Collection } from "./Collection.js";
+import { Invention } from "../models/Invention.js";
 
 /**
  * Specialized collection for managing Invention entities.
@@ -10,7 +10,7 @@ export class InventionColl extends Collection<Invention> {
    * @param level - Danger level (1–10).
    */
   findByDangerLevel(level: number): Invention[] {
-    return this.getAll().filter(i => i.dangerLevel === level);
+    return this.getAll().filter((i) => i.dangerLevel === level);
   }
 
   /**
@@ -19,7 +19,7 @@ export class InventionColl extends Collection<Invention> {
    */
   orderByDanger(desc = false): Invention[] {
     return [...this.getAll()].sort((a, b) =>
-      desc ? b.dangerLevel - a.dangerLevel : a.dangerLevel - b.dangerLevel
+      desc ? b.dangerLevel - a.dangerLevel : a.dangerLevel - b.dangerLevel,
     );
   }
 }

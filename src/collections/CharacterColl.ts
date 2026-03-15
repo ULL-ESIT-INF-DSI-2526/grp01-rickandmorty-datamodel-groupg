@@ -1,5 +1,5 @@
-import { Collection } from "./Collection";
-import { Character } from "../models/Character";
+import { Collection } from "./Collection.js";
+import { Character } from "../models/Character.js";
 
 /**
  * Specialized collection for managing Character entities.
@@ -11,7 +11,7 @@ export class CharacterColl extends Collection<Character> {
    * @param speciesId - The ID of the species.
    */
   findBySpecies(speciesId: string): Character[] {
-    return this.getAll().filter(c => c.speciesId === speciesId);
+    return this.getAll().filter((c) => c.speciesId === speciesId);
   }
 
   /**
@@ -19,7 +19,7 @@ export class CharacterColl extends Collection<Character> {
    * @param affiliation - The affiliation or group name.
    */
   findByAffiliation(affiliation: string): Character[] {
-    return this.getAll().filter(c => c.affiliation === affiliation);
+    return this.getAll().filter((c) => c.affiliation === affiliation);
   }
 
   /**
@@ -28,7 +28,7 @@ export class CharacterColl extends Collection<Character> {
    */
   orderByIntelligence(desc = false): Character[] {
     return [...this.getAll()].sort((a, b) =>
-      desc ? b.intelligence - a.intelligence : a.intelligence - b.intelligence
+      desc ? b.intelligence - a.intelligence : a.intelligence - b.intelligence,
     );
   }
 }

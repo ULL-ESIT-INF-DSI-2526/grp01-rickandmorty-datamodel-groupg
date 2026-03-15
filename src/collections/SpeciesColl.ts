@@ -1,5 +1,5 @@
-import { Collection } from "./Collection";
-import { Species } from "../models/Species";
+import { Collection } from "./Collection.js";
+import { Species } from "../models/Species.js";
 
 /**
  * Specialized collection for managing Species entities.
@@ -10,6 +10,6 @@ export class SpeciesColl extends Collection<Species> {
    * @param planet - The name of the planet.
    */
   findByPlanet(planet: string): Species[] {
-    return this.getAll().filter(s => s.planetOfOrigin === planet);
+    return this.getAll().filter((s) => s.planetOfOrigin === planet);
   }
 }

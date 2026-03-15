@@ -1,4 +1,4 @@
-import { ICharacter, CharacterStatus } from "../interfaces/ICharacter";
+import { ICharacter, CharacterStatus } from "../interfaces/ICharacter.js";
 
 /**
  * Represents a character in the multiverse.

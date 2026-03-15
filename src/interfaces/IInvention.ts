@@ -1,4 +1,4 @@
-import { IEntity } from "./IEntity";
+import { IEntity } from "./IEntity.js";
 
 /**
  * Represents an invention created in the multiverse.

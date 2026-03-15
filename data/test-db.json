@@ -1,0 +1,26 @@
+{
+  "characters": [
+    {
+      "id": "1",
+      "name": "Rick",
+      "description": "Scientist",
+      "speciesId": "sp1",
+      "originDimensionId": "C-137",
+      "status": "Alive",
+      "affiliation": "Council",
+      "intelligence": 10
+    }
+  ],
+  "dimensions": [
+    {
+      "id": "d1",
+      "name": "C-137",
+      "description": "Main",
+      "status": "active",
+      "techLevel": 8
+    }
+  ],
+  "species": [],
+  "locations": [],
+  "inventions": []
+}

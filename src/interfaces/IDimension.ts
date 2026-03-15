@@ -1,4 +1,4 @@
-import { IEntity } from "./IEntity";
+import { IEntity } from "./IEntity.js";
 
 /** Possible states for a dimension */
 export type DimensionStatus = "active" | "destroyed" | "quarantine";

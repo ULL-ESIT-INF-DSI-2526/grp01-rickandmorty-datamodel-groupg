@@ -1,4 +1,4 @@
-import { IEntity } from "./IEntity";
+import { IEntity } from "./IEntity.js";
 
 /**
  * Represents a location inside a dimension.

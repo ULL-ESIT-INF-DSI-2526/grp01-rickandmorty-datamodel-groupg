@@ -1,4 +1,4 @@
-import { IEntity } from "./IEntity";
+import { IEntity } from "./IEntity.js";
 
 /** Possible life states for a character */
 export type CharacterStatus = "Alive" | "Dead" | "Unknown";
