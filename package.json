@@ -16,13 +16,15 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/ULL-ESIT-INF-DSI-2526/grp01-rickandmorty-datamodel-groupg/issues"
   },
   "homepage": "https://github.com/ULL-ESIT-INF-DSI-2526/grp01-rickandmorty-datamodel-groupg#readme",
   "devDependencies": {
     "@eslint/js": "^9.39.4",
+    "@types/lodash": "^4.17.24",
+    "@types/node": "^25.5.0",
     "@vitest/coverage-v8": "^4.1.0",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
@@ -33,5 +35,8 @@
     "typedoc": "^0.28.17",
     "typescript-eslint": "^8.57.0",
     "vitest": "^4.1.0"
+  },
+  "dependencies": {
+    "lowdb": "^7.0.1"
   }
 }
