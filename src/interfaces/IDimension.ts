@@ -1,14 +1,13 @@
 import { IEntity } from "./IEntity.js";
 
-/** Possible states for a dimension */
-export type DimensionStatus = "active" | "destroyed" | "quarantine";
+/** Possible states of a dimension */
+export type DimensionStatus = "Active" | "Destroyed" | "Quarantined" | string;
 
 /**
  * Represents a dimension in the multiverse.
- * Extends the base IEntity interface.
  */
 export interface IDimension extends IEntity {
-  /** Current status of the dimension */
+  /** Current state of the dimension */
   status: DimensionStatus;
 
   /** Technological level (1–10) */

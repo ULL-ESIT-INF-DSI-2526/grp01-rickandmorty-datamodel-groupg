@@ -1,8 +1,5 @@
 import { IEntity } from "./IEntity.js";
 
-/** Possible life states for a character */
-export type CharacterStatus = "Alive" | "Dead" | "Unknown";
-
 /**
  * Represents a character in the multiverse.
  */
@@ -14,7 +11,7 @@ export interface ICharacter extends IEntity {
   originDimensionId: string;
 
   /** Life status of the character */
-  status: CharacterStatus;
+  status: string;
 
   /** Group or faction the character belongs to */
   affiliation: string;

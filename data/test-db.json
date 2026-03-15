@@ -16,11 +16,38 @@
       "id": "d1",
       "name": "C-137",
       "description": "Main",
-      "status": "active",
+      "status": "Active",
       "techLevel": 8
     }
   ],
-  "species": [],
-  "locations": [],
-  "inventions": []
+  "species": [
+    {
+      "id": "s1",
+      "name": "Human",
+      "description": "desc",
+      "origin": "Earth",
+      "type": "Humanoid",
+      "averageLifespan": 80
+    }
+  ],
+  "locations": [
+    {
+      "id": "l1",
+      "name": "Earth",
+      "description": "desc",
+      "type": "Planet",
+      "dimensionId": "C-137",
+      "population": 7000000000
+    }
+  ],
+  "inventions": [
+    {
+      "id": "i1",
+      "name": "Portal Gun",
+      "description": "desc",
+      "inventorId": "1",
+      "type": "Device",
+      "dangerLevel": 9
+    }
+  ]
 }
