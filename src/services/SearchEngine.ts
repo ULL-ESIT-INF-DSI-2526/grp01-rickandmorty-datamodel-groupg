@@ -24,20 +24,20 @@ export class SearchEngine {
     let results = this.db.characters.getAll();
 
     if (filters.name) {
-      results = results.filter(c => c.name.toLowerCase().includes(filters.name!.toLowerCase()))
-    };
+      results = results.filter(c => c.name.toLowerCase().includes(filters.name!.toLowerCase()));
+    }
     if (filters.speciesId) {
-      results = results.filter(c => c.speciesId === filters.speciesId)
-    };
+      results = results.filter(c => c.speciesId === filters.speciesId);
+    }
     if (filters.affiliation) {
-      results = results.filter(c => c.affiliation === filters.affiliation)
-    };
+      results = results.filter(c => c.affiliation === filters.affiliation);
+    }
     if (filters.status) {
-      results = results.filter(c => c.status === filters.status)
-    };
+      results = results.filter(c => c.status === filters.status);
+    }
     if (filters.originId) {
-      results = results.filter(c => c.originDimensionId === filters.originId)
-    };
+      results = results.filter(c => c.originDimensionId === filters.originId);
+    }
 
     return results.sort((a, b) => {
       const valA = a[sortBy];
@@ -56,14 +56,14 @@ export class SearchEngine {
   public searchLocations(name?: string, type?: string, dimensionId?: string): Location[] {
     let results = this.db.locations.getAll();
     if (name) { 
-      results = results.filter(l => l.name.toLowerCase().includes(name.toLowerCase()))
-    };
+      results = results.filter(l => l.name.toLowerCase().includes(name.toLowerCase()));
+    }
     if (type) { 
-      results = results.filter(l => l.type === type)
-    };
+      results = results.filter(l => l.type === type);
+    }
     if (dimensionId) {
-      results = results.filter(l => l.dimensionId === dimensionId)
-    };
+      results = results.filter(l => l.dimensionId === dimensionId);
+    }
     return results;
   }
 
@@ -77,17 +77,17 @@ export class SearchEngine {
   public searchInventions(name?: string, type?: string, inventorId?: string, dangerLevel?: number): Invention[] {
     let results = this.db.inventions.getAll();
     if (name) {
-      results = results.filter(i => i.name.toLowerCase().includes(name.toLowerCase()))
-    };
+      results = results.filter(i => i.name.toLowerCase().includes(name.toLowerCase()));
+    }
     if (type){ 
-      results = results.filter(i => i.type === type)
-    };
+      results = results.filter(i => i.type === type);
+    }
     if (inventorId){
-      results = results.filter(i => i.inventorId === inventorId)
-    };
+      results = results.filter(i => i.inventorId === inventorId);
+    }
     if (dangerLevel !== undefined) {
-      results = results.filter(i => i.dangerLevel === dangerLevel)
-    };
+      results = results.filter(i => i.dangerLevel === dangerLevel);
+    }
     return results;
   }
 
