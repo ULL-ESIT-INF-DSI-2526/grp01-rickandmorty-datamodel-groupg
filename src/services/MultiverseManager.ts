@@ -1,60 +1,38 @@
 import { DbManager } from "../database/DbManager.js";
+import { DimensionStatus } from "../interfaces/IDimension.js";
 
-/**
- * Core manager for handling high-level multiverse operations,
- * interdimensional events, and global consistency.
- */
+export interface IMultiverseEvent {
+  timestamp: string;
+  type: "TRAVEL" | "DIMENSION_CHANGE" | "INVENTION_DEPLOY";
+  description: string;
+  subjectId: string;
+}
+
+
 export class MultiverseManager {
-  constructor(private db: DbManager) {}
+  constructor(private readonly db: DbManager) {}
 
-  /**
-   * Records a character's travel to a different dimension.
-   * @param characterId - The ID of the character traveling.
-   * @param targetDimensionId - The ID of the destination dimension.
-   * @throws Error if character or dimension is not found, or if destination is destroyed.
-   */
-  public async performTravel(characterId: string, targetDimensionId: string): Promise<void> {
-    const character = this.db.characters.getById(characterId);
-    const dimension = this.db.dimensions.getById(targetDimensionId);
-
-    if (!character || !dimension) {
-      throw new Error("Invalid character or dimension ID.");
-    }
-
-    if (dimension.status === "destroyed") {
-      throw new Error("Cannot travel to a destroyed dimension.");
-    }
-
-    // Logic for updating character location would go here
-    console.log(`Event: ${character.name} moved to ${dimension.name}`);
-    
-    // Persist changes
-    await this.db.save();
+  public async registerTravel(charId: string, destId: string, reason: string): Promise<void> {
+    // Fernando 
   }
 
-  /**
-   * Generates a report of active dimensions and their technological advancement.
-   * @returns An array of dimension summaries.
-   */
-  public getActiveDimensionsReport() {
-    return this.db.dimensions
-      .getAll()
-      .filter((d) => d.status === "active")
-      .map((d) => ({
-        name: d.name,
-        techLevel: d.techLevel,
-        status: d.status,
-      }));
+  public async updateDimensionState(id: string, state: DimensionStatus, reason: string): Promise<void> {
+    // Fernando 
   }
 
-  /**
-   * Identifies the most dangerous inventions currently registered.
-   * @param threshold - The minimum danger level to consider.
-   */
-  public getDangerReport(threshold: number = 8) {
-    return this.db.inventions
-      .getAll()
-      .filter((i) => i.dangerLevel >= threshold)
-      .sort((a, b) => b.dangerLevel - a.dangerLevel);
+  public getTechReport(): { dimensions: any[], average: string } {
+    return { dimensions: [], average: "0.0" }; // Fernando 
+  }
+
+  public getVersionAnalytics(): { name: string, versions: number }[] {
+    return []; // Fernando 
+  }
+
+  public getDangerReport(): any[] {
+    return []; // Fernando 
+  }
+
+  public getCharacterHistory(charId: string): IMultiverseEvent[] {
+    return []; // Fernando 
   }
 }
