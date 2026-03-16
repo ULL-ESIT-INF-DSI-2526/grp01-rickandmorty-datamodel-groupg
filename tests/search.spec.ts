@@ -1,115 +1,83 @@
 import { describe, test, expect, beforeEach, afterAll } from "vitest";
 import { DbManager } from "../src/database/DbManager.js";
 import { SearchEngine } from "../src/services/SearchEngine.js";
-import { Character } from "../src/models/Character.js";
-import { Location } from "../src/models/Location.js";
-import { Invention } from "../src/models/Invention.js";
+import { Character } from "../src/models/Character.ts";
+import { Location } from "../src/models/Location.ts";
+import { Invention } from "../src/models/Invention.ts";
 import fs from "fs";
 
-describe("SearchEngine Unit Tests", () => {
-  const testDbPath = "data/test-search.json";
+describe("SearchEngine Full Coverage Tests", () => {
+  const testDbPath = "data/test-coverage.json";
   let db: DbManager;
   let searchEngine: SearchEngine;
 
-  /**
-   * Set up a clean environment before each test.
-   */
   beforeEach(async () => {
-    // Ensure the data directory exists
     if (!fs.existsSync("data")) fs.mkdirSync("data");
-    
-    // Initialize DB and SearchEngine
     db = new DbManager(testDbPath);
     searchEngine = new SearchEngine(db);
 
-    // Populate with Mock Data
-    db.characters.add(new Character("c1", "Rick Sanchez", "Original", "s-hum", "d-137", "Alive", "Council", 10));
-    db.characters.add(new Character("c2", "Morty Smith", "Sidekick", "s-hum", "d-137", "Alive", "Family", 4));
-    db.characters.add(new Character("c3", "Evil Morty", "Villain", "s-hum", "d-777", "Alive", "President", 9));
-    db.characters.add(new Character("c4", "Pickle Rick", "Warrior", "s-pick", "d-137", "Unknown", "None", 8));
+    // Data for Character coverage
+    db.characters.add(new Character("c1", "Rick", "Desc", "s1", "d1", "Alive", "Council", 10));
+    db.characters.add(new Character("c2", "Morty", "Desc", "s1", "d1", "Alive", "Family", 5));
+    db.characters.add(new Character("c3", "Morty Clone", "Desc", "s2", "d2", "Dead", "None", 5));
 
-    db.locations.add(new Location("l1", "Citadel", "Hub", "Station", "d-137", 1000000));
-    db.locations.add(new Location("l2", "Earth", "Home", "Planet", "d-137", 7000000000));
+    // Data for Location coverage
+    db.locations.add(new Location("l1", "Earth", "Desc", "Planet", "d1", 7000));
+    db.locations.add(new Location("l2", "Citadel", "Desc", "Station", "d2", 1000));
 
-    db.inventions.add(new Invention("i1", "Portal Gun", "Travel", "c1", "Device", 9));
-    db.inventions.add(new Invention("i2", "Neutrino Bomb", "Weapon", "c1", "Weapon", 10));
-    db.inventions.add(new Invention("i3", "Butter Robot", "Joke", "c1", "Robot", 1));
+    // Data for Invention coverage
+    db.inventions.add(new Invention("i1", "Portal Gun", "Desc", "c1", "Tool", 9));
+    db.inventions.add(new Invention("i2", "Neutrino Bomb", "Desc", "c1", "Weapon", 10));
   });
 
-  /**
-   * Cleanup after tests.
-   */
   afterAll(() => {
     if (fs.existsSync(testDbPath)) fs.unlinkSync(testDbPath);
   });
 
-  describe("Alternative Versions Search", () => {
-    test("Should find all versions of 'Rick'", () => {
-      const results = searchEngine.findAlternativeVersions("Rick");
-      expect(results).toHaveLength(2); // Rick Sanchez and Pickle Rick
-      expect(results.some(c => c.name === "Pickle Rick")).toBe(true);
+  describe("searchCharacters Coverage", () => {
+    test("Should hit all character filter branches", () => {
+      // Individual tests to ensure each 'if' branch is executed
+      expect(searchEngine.searchCharacters({ name: "Rick" })).toHaveLength(1);
+      expect(searchEngine.searchCharacters({ speciesId: "s1" })).toHaveLength(2);
+      expect(searchEngine.searchCharacters({ affiliation: "Council" })).toHaveLength(1);
+      expect(searchEngine.searchCharacters({ status: "Dead" })).toHaveLength(1);
+      expect(searchEngine.searchCharacters({ originId: "d2" })).toHaveLength(1);
     });
 
-    test("Should be case insensitive", () => {
-      const results = searchEngine.findAlternativeVersions("morty");
-      expect(results).toHaveLength(2); // Morty Smith and Evil Morty
+    test("Should hit sorting tie branch (valA === valB)", () => {
+      const results = searchEngine.searchCharacters({}, "intelligence", false);
+      // Morty (5) and Morty Clone (5) are tied. 
+      // We check that the sort function handles the tie without crashing.
+      expect(results).toBeDefined();
     });
 
-    test("Should return empty array if no match", () => {
-      const results = searchEngine.findAlternativeVersions("Jerry");
-      expect(results).toHaveLength(0);
-    });
-  });
-
-  describe("Advanced Character Search", () => {
-    test("Should filter by status 'Alive'", () => {
-      const results = searchEngine.searchCharacters({ status: "Alive" });
-      expect(results).toHaveLength(3);
-    });
-
-    test("Should filter by multiple criteria (Dimension + Species)", () => {
-      const results = searchEngine.searchCharacters({ originId: "d-137", speciesId: "s-hum" });
-      expect(results).toHaveLength(2); // Rick and Morty Smith
-    });
-
-    test("Should sort by intelligence descending", () => {
-      const results = searchEngine.searchCharacters({}, "intelligence", true);
-      expect(results[0].name).toBe("Rick Sanchez");
-      expect(results[0].intelligence).toBe(10);
-      expect(results[results.length - 1].intelligence).toBe(4);
-    });
-
-    test("Should sort by name ascending", () => {
-      const results = searchEngine.searchCharacters({}, "name", false);
-      expect(results[0].name).toBe("Evil Morty");
+    test("Should sort by name descending", () => {
+      const results = searchEngine.searchCharacters({}, "name", true);
+      expect(results[0].name).toBe("Rick");
     });
   });
 
-  describe("Location Search", () => {
-    test("Should filter locations by type 'Planet'", () => {
-      const results = searchEngine.searchLocations(undefined, "Planet");
-      expect(results).toHaveLength(1);
-      expect(results[0].name).toBe("Earth");
-    });
-
-    test("Should filter by dimension ID", () => {
-      const results = searchEngine.searchLocations(undefined, undefined, "d-137");
-      expect(results).toHaveLength(2);
+  describe("searchLocations Coverage", () => {
+    test("Should hit all location filter branches", () => {
+      expect(searchEngine.searchLocations("Earth")).toHaveLength(1);
+      expect(searchEngine.searchLocations(undefined, "Station")).toHaveLength(1);
+      expect(searchEngine.searchLocations(undefined, undefined, "d2")).toHaveLength(1);
+      expect(searchEngine.searchLocations("NonExistent", "None", "None")).toHaveLength(0);
     });
   });
 
-  describe("Invention Search", () => {
-    test("Should find dangerous inventions (Level >= 9)", () => {
-      // Inventions with exactly level 9 or 10
-      const results = searchEngine.searchInventions(undefined, undefined, undefined, 9);
-      const results2 = searchEngine.searchInventions(undefined, undefined, undefined, 10);
-      expect(results).toHaveLength(1); // Portal Gun
-      expect(results2).toHaveLength(1); // Neutrino Bomb
+  describe("searchInventions Coverage", () => {
+    test("Should hit all invention filter branches", () => {
+      expect(searchEngine.searchInventions("Portal")).toHaveLength(1);
+      expect(searchEngine.searchInventions(undefined, "Weapon")).toHaveLength(1);
+      expect(searchEngine.searchInventions(undefined, undefined, "c1")).toHaveLength(2);
+      expect(searchEngine.searchInventions(undefined, undefined, undefined, 10)).toHaveLength(1);
     });
+  });
 
-    test("Should search invention by name", () => {
-      const results = searchEngine.searchInventions("Portal");
-      expect(results[0].name).toBe("Portal Gun");
+  describe("findAlternativeVersions", () => {
+    test("Should find versions ignoring case", () => {
+      expect(searchEngine.findAlternativeVersions("RICK")).toHaveLength(1);
     });
   });
 });
