@@ -1,5 +1,26 @@
 {
-  "characters": [],
+  "characters": [
+    {
+      "id": "123",
+      "name": "Lopeteghi",
+      "description": "N/A",
+      "speciesId": "s1",
+      "originDimensionId": "d1",
+      "status": "Alive",
+      "affiliation": "None",
+      "intelligence": 8
+    },
+    {
+      "id": "321",
+      "name": "sau",
+      "description": "N/A",
+      "speciesId": "s1",
+      "originDimensionId": "d1",
+      "status": "Alive",
+      "affiliation": "None",
+      "intelligence": 2
+    }
+  ],
   "dimensions": [],
   "species": [],
   "locations": [],
