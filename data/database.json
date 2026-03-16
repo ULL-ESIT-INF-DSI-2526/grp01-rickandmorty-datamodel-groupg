@@ -1,28 +1,816 @@
 {
   "characters": [
     {
-      "id": "123",
-      "name": "Lopeteghi",
-      "description": "N/A",
-      "speciesId": "s1",
-      "originDimensionId": "d1",
-      "status": "Alive",
-      "affiliation": "None",
-      "intelligence": 8
+    "id": "char1",
+    "name": "Rick Sanchez",
+    "description": "cientifico genio alcoholico",
+    "speciesId": "species1",
+    "originDimensionId": "dim1",
+    "status": "Alive",
+    "affiliation": "familia smith",
+    "intelligence": 10
     },
     {
-      "id": "321",
-      "name": "sau",
-      "description": "N/A",
-      "speciesId": "s1",
-      "originDimensionId": "d1",
-      "status": "Alive",
-      "affiliation": "None",
-      "intelligence": 2
+    "id": "char2",
+    "name": "Morty Smith",
+    "description": "nieto nervioso de rick",
+    "speciesId": "species1",
+    "originDimensionId": "dim3",
+    "status": "Alive",
+    "affiliation": "familia smith",
+    "intelligence": 6
+    },
+    {
+    "id": "char3",
+    "name": "Summer Smith",
+    "description": "hermana mayor de morty",
+    "speciesId": "species1",
+    "originDimensionId": "dim3",
+    "status": "Alive",
+    "affiliation": "familia smith",
+    "intelligence": 7
+    },
+    {
+    "id": "char4",
+    "name": "Beth Smith",
+    "description": "hija de rick cirujana de caballos",
+    "speciesId": "species1",
+    "originDimensionId": "dim3",
+    "status": "Alive",
+    "affiliation": "familia smith",
+    "intelligence": 8
+    },
+    {
+    "id": "char5",
+    "name": "Jerry Smith",
+    "description": "marido inseguro de beth",
+    "speciesId": "species1",
+    "originDimensionId": "dim3",
+    "status": "Alive",
+    "affiliation": "familia smith",
+    "intelligence": 4
+    },
+    {
+    "id": "char6",
+    "name": "Space Beth",
+    "description": "version guerrera de beth",
+    "speciesId": "species1",
+    "originDimensionId": "dim3",
+    "status": "Alive",
+    "affiliation": "resistencia espacial",
+    "intelligence": 8
+    },
+    {
+    "id": "char7",
+    "name": "Morty Jr",
+    "description": "hijo de morty",
+    "speciesId": "species5",
+    "originDimensionId": "dim1",
+    "status": "Alive",
+    "affiliation": "independiente",
+    "intelligence": 6
+    },
+    {
+    "id": "char8",
+    "name": "Naruto Smith",
+    "description": "bebe gigante del espacio",
+    "speciesId": "species1",
+    "originDimensionId": "dim3",
+    "status": "Alive",
+    "affiliation": "familia smith",
+    "intelligence": 2
+    },
+    {
+    "id": "char9",
+    "name": "Mr Poopybutthole",
+    "description": "viejo amigo de la familia",
+    "speciesId": "species1",
+    "originDimensionId": "dim1",
+    "status": "Alive",
+    "affiliation": "amigos de rick",
+    "intelligence": 7
+    },
+    {
+    "id": "char10",
+    "name": "Birdperson",
+    "description": "mejor amigo de rick",
+    "speciesId": "species2",
+    "originDimensionId": "dim1",
+    "status": "Alive",
+    "affiliation": "resistencia",
+    "intelligence": 8
+    },
+    {
+    "id": "char11",
+    "name": "Squanchy",
+    "description": "alien gatoide amigo de rick",
+    "speciesId": "species2",
+    "originDimensionId": "dim1",
+    "status": "Alive",
+    "affiliation": "amigos de rick",
+    "intelligence": 7
+    },
+    {
+    "id": "char12",
+    "name": "Mr Meeseeks",
+    "description": "criatura creada para cumplir tareas",
+    "speciesId": "species2",
+    "originDimensionId": "dim3",
+    "status": "Alive",
+    "affiliation": "ninguna",
+    "intelligence": 5
+    },
+    {
+    "id": "char13",
+    "name": "Noob Noob",
+    "description": "conserje de los vindicadores",
+    "speciesId": "species1",
+    "originDimensionId": "dim1",
+    "status": "Alive",
+    "affiliation": "vindicadores",
+    "intelligence": 5
+    },
+    {
+    "id": "char14",
+    "name": "Unity",
+    "description": "mente colmena alienigena",
+    "speciesId": "species2",
+    "originDimensionId": "dim1",
+    "status": "Alive",
+    "affiliation": "ninguna",
+    "intelligence": 9
+    },
+    {
+    "id": "char15",
+    "name": "Evil Morty",
+    "description": "version malvada de morty",
+    "speciesId": "species1",
+    "originDimensionId": "dim3",
+    "status": "Alive",
+    "affiliation": "ciudadela",
+    "intelligence": 9
+    },
+    {
+    "id": "char16",
+    "name": "Rick Prime",
+    "description": "enemigo principal de rick",
+    "speciesId": "species1",
+    "originDimensionId": "dim2",
+    "status": "Alive",
+    "affiliation": "ninguna",
+    "intelligence": 10
+    },
+    {
+    "id": "char17",
+    "name": "Tammy",
+    "description": "agente de la federacion",
+    "speciesId": "species1",
+    "originDimensionId": "dim1",
+    "status": "Dead",
+    "affiliation": "federacion galactica",
+    "intelligence": 7
+    },
+    {
+    "id": "char18",
+    "name": "Krombopulos Michael",
+    "description": "asesino a sueldo",
+    "speciesId": "species1",
+    "originDimensionId": "dim1",
+    "status": "Dead",
+    "affiliation": "independiente",
+    "intelligence": 6
+    },
+    {
+    "id": "char19",
+    "name": "Mr Nimbus",
+    "description": "rey del oceano",
+    "speciesId": "species1",
+    "originDimensionId": "dim1",
+    "status": "Alive",
+    "affiliation": "oceano",
+    "intelligence": 7
+    },
+    {
+    "id": "char20",
+    "name": "Supernova",
+    "description": "heroina de los vindicadores",
+    "speciesId": "species1",
+    "originDimensionId": "dim1",
+    "status": "Alive",
+    "affiliation": "vindicadores",
+    "intelligence": 8
+    },
+    {
+    "id": "char21",
+    "name": "Jessica",
+    "description": "amor de morty",
+    "speciesId": "species1",
+    "originDimensionId": "dim3",
+    "status": "Alive",
+    "affiliation": "escuela",
+    "intelligence": 6
+    },
+    {
+    "id": "char22",
+    "name": "Director Vagina",
+    "description": "director de la escuela",
+    "speciesId": "species1",
+    "originDimensionId": "dim3",
+    "status": "Alive",
+    "affiliation": "escuela",
+    "intelligence": 6
+    },
+    {
+    "id": "char23",
+    "name": "Mr Goldenfold",
+    "description": "profesor de matematicas",
+    "speciesId": "species1",
+    "originDimensionId": "dim3",
+    "status": "Alive",
+    "affiliation": "escuela",
+    "intelligence": 6
+    },
+    {
+    "id": "char24",
+    "name": "Ethan",
+    "description": "ex novio de summer",
+    "speciesId": "species1",
+    "originDimensionId": "dim3",
+    "status": "Alive",
+    "affiliation": "escuela",
+    "intelligence": 5
+    },
+    {
+    "id": "char25",
+    "name": "Abradolf Lincler",
+    "description": "experimento genetico de rick",
+    "speciesId": "species1",
+    "originDimensionId": "dim1",
+    "status": "Dead",
+    "affiliation": "ninguna",
+    "intelligence": 6
+    },
+    {
+    "id": "char26",
+    "name": "Scary Terry",
+    "description": "monstruo de los sueños",
+    "speciesId": "species2",
+    "originDimensionId": "dim9",
+    "status": "Alive",
+    "affiliation": "ninguna",
+    "intelligence": 6
+    },
+    {
+    "id": "char27",
+    "name": "Doofus Rick",
+    "description": "rick amable de otra dimension",
+    "speciesId": "species1",
+    "originDimensionId": "dim14",
+    "status": "Alive",
+    "affiliation": "ciudadela",
+    "intelligence": 7
+    },
+    {
+    "id": "char28",
+    "name": "Revolio Clockberg Jr",
+    "description": "experto en engranajes",
+    "speciesId": "species2",
+    "originDimensionId": "dim1",
+    "status": "Dead",
+    "affiliation": "ninguna",
+    "intelligence": 7
+    },
+    {
+    "id": "char29",
+    "name": "Annie",
+    "description": "trabajadora de anatomy park",
+    "speciesId": "species1",
+    "originDimensionId": "dim3",
+    "status": "Alive",
+    "affiliation": "anatomy park",
+    "intelligence": 6
+    },
+    {
+    "id": "char30",
+    "name": "Cromulon",
+    "description": "cabeza gigante musical",
+    "speciesId": "species3",
+    "originDimensionId": "dim1",
+    "status": "Alive",
+    "affiliation": "planeta musical",
+    "intelligence": 8
     }
-  ],
-  "dimensions": [],
-  "species": [],
-  "locations": [],
-  "inventions": []
+],
+  
+
+
+  "dimensions": [
+    {
+    "id": "dim1",
+    "name": "Dimension C137",
+    "description": "universo original de rick",
+    "status": "Active",
+    "techLevel": 9
+    },
+    {
+    "id": "dim2",
+    "name": "Dimension Prime",
+    "description": "universo mutado por virus cronenberg",
+    "status": "Destroyed",
+    "techLevel": 8
+    },
+    {
+    "id": "dim3",
+    "name": "Dimension C131",
+    "description": "dimension donde vive la familia smith",
+    "status": "Active",
+    "techLevel": 8
+    },
+    {
+    "id": "dim4",
+    "name": "Ciudadela de los ricks",
+    "description": "nexo de ricks de muchas realidades",
+    "status": "Destroyed",
+    "techLevel": 10
+    },
+    {
+    "id": "dim5",
+    "name": "Dimension de los sofas",
+    "description": "sofas dominan a las personas",
+    "status": "Active",
+    "techLevel": 4
+    },
+    {
+    "id": "dim6",
+    "name": "Dimension de las sillas",
+    "description": "sillas dominan a las personas",
+    "status": "Active",
+    "techLevel": 4
+    },
+    {
+    "id": "dim7",
+    "name": "Dimension de los telefonos",
+    "description": "telefonos son los habitantes",
+    "status": "Active",
+    "techLevel": 5
+    },
+    {
+    "id": "dim8",
+    "name": "Dimension 35C",
+    "description": "lugar de las mega semillas",
+    "status": "Active",
+    "techLevel": 6
+    },
+    {
+    "id": "dim9",
+    "name": "Mundo de fantasia",
+    "description": "dimension con magia y castillos",
+    "status": "Active",
+    "techLevel": 3
+    },
+    {
+    "id": "dim10",
+    "name": "Dimension del aspirador",
+    "description": "universo dominado por aspiradores",
+    "status": "Active",
+    "techLevel": 4
+    },
+    {
+    "id": "dim11",
+    "name": "Valhalla",
+    "description": "dimension de guerreros muertos",
+    "status": "Active",
+    "techLevel": 7
+    },
+    {
+    "id": "dim12",
+    "name": "Dimension de pizza",
+    "description": "pizzas viven como personas",
+    "status": "Active",
+    "techLevel": 3
+    },
+    {
+    "id": "dim13",
+    "name": "Dimension de los eructos",
+    "description": "aire lleno de gas de eructo",
+    "status": "Active",
+    "techLevel": 2
+    },
+    {
+    "id": "dim14",
+    "name": "Dimension J19Z7",
+    "description": "hogar de doofus rick",
+    "status": "Active",
+    "techLevel": 5
+    },
+    {
+    "id": "dim15",
+    "name": "Dimension de la tostada",
+    "description": "todo esta hecho de pan tostado",
+    "status": "Active",
+    "techLevel": 3
+    }
+],
+
+
+
+  "species": [
+    {
+    "id": "species1",
+    "name": "Gromflomitas",
+    "description": "especie insectoide de la federacion galactica",
+    "origin": "federacion galactica",
+    "type": "insectoide",
+    "averageLifespan": 60
+    },
+    {
+    "id": "species2",
+    "name": "Meeseeks",
+    "description": "criaturas azules creadas para cumplir tareas",
+    "origin": "caja de meeseeks",
+    "type": "artificial",
+    "averageLifespan": 1
+    },
+    {
+    "id": "species3",
+    "name": "Cromulons",
+    "description": "cabezas gigantes que buscan musica",
+    "origin": "espacio profundo",
+    "type": "cosmico",
+    "averageLifespan": 1000
+    },
+    {
+    "id": "species4",
+    "name": "Cronenbergs",
+    "description": "criaturas mutadas por virus genetico",
+    "origin": "dimension prime",
+    "type": "mutante",
+    "averageLifespan": 30
+    },
+    {
+    "id": "species5",
+    "name": "Gazorpianos",
+    "description": "habitantes del planeta gazorpazorp",
+    "origin": "gazorpazorp",
+    "type": "alienigena",
+    "averageLifespan": 70
+    },
+    {
+    "id": "species6",
+    "name": "Zigerions",
+    "description": "alienigenas expertos en estafas",
+    "origin": "zigerya",
+    "type": "alienigena",
+    "averageLifespan": 90
+    },
+    {
+    "id": "species7",
+    "name": "Parasitos de memoria",
+    "description": "organismos que crean recuerdos falsos",
+    "origin": "desconocido",
+    "type": "parasito",
+    "averageLifespan": 20
+    },
+    {
+    "id": "species8",
+    "name": "Plutonianos",
+    "description": "habitantes humanoides de pluton",
+    "origin": "pluton",
+    "type": "humanoide",
+    "averageLifespan": 85
+    },
+    {
+    "id": "species9",
+    "name": "Kozbianos",
+    "description": "alienigenas comunes en mercados espaciales",
+    "origin": "kozbi",
+    "type": "alienigena",
+    "averageLifespan": 95
+    },
+    {
+    "id": "species10",
+    "name": "Gatos del espacio",
+    "description": "criaturas misteriosas que hablan",
+    "origin": "desconocido",
+    "type": "animal",
+    "averageLifespan": 50
+    }
+
+],
+
+
+
+  "locations": [
+    {
+    "id": "loc1",
+    "name": "Garaje de rick",
+    "description": "laboratorio y taller de rick",
+    "type": "laboratorio",
+    "dimensionId": "dim3",
+    "population": 2
+    },
+    {
+    "id": "loc2",
+    "name": "Anatomy park",
+    "description": "parque dentro del cuerpo humano",
+    "type": "parque",
+    "dimensionId": "dim3",
+    "population": 200
+    },
+    {
+    "id": "loc3",
+    "name": "Gazorpazorp",
+    "description": "planeta de los gazorpianos",
+    "type": "planeta",
+    "dimensionId": "dim1",
+    "population": 3000000
+    },
+    {
+    "id": "loc4",
+    "name": "Blips and chitz",
+    "description": "sala de juegos virtuales",
+    "type": "arcade",
+    "dimensionId": "dim1",
+    "population": 500
+    },
+    {
+    "id": "loc5",
+    "name": "Froopyland",
+    "description": "mundo infantil creado por rick",
+    "type": "dimension artificial",
+    "dimensionId": "dim3",
+    "population": 50
+    },
+    {
+    "id": "loc6",
+    "name": "Nuptia 4",
+    "description": "planeta donde morty tiene hijo",
+    "type": "planeta",
+    "dimensionId": "dim1",
+    "population": 2000000
+    },
+    {
+    "id": "loc7",
+    "name": "Prision de la federacion",
+    "description": "carcel galactica",
+    "type": "prision",
+    "dimensionId": "dim1",
+    "population": 10000
+    },
+    {
+    "id": "loc8",
+    "name": "Mundo toxico",
+    "description": "lugar donde viven las versiones toxicas",
+    "type": "planeta",
+    "dimensionId": "dim3",
+    "population": 100000
+    },
+    {
+    "id": "loc9",
+    "name": "Pluto",
+    "description": "hogar de los plutonianos",
+    "type": "planeta",
+    "dimensionId": "dim1",
+    "population": 500000
+    },
+    {
+    "id": "loc10",
+    "name": "Squanch",
+    "description": "planeta de squanchy",
+    "type": "planeta",
+    "dimensionId": "dim1",
+    "population": 400000
+    },
+    {
+    "id": "loc11",
+    "name": "Gear world",
+    "description": "planeta lleno de engranajes",
+    "type": "planeta",
+    "dimensionId": "dim1",
+    "population": 600000
+    },
+    {
+    "id": "loc12",
+    "name": "Cobb nebula",
+    "description": "region espacial peligrosa",
+    "type": "nebula",
+    "dimensionId": "dim1",
+    "population": 0
+    },
+    {
+    "id": "loc13",
+    "name": "Harry herpson high school",
+    "description": "escuela de morty",
+    "type": "escuela",
+    "dimensionId": "dim3",
+    "population": 800
+    },
+    {
+    "id": "loc14",
+    "name": "Garbtopia",
+    "description": "mundo de basura espacial",
+    "type": "planeta",
+    "dimensionId": "dim1",
+    "population": 150000
+    },
+    {
+    "id": "loc15",
+    "name": "Mundo de ball fondlers",
+    "description": "planeta de heroes falsos",
+    "type": "planeta",
+    "dimensionId": "dim1",
+    "population": 300000
+    },
+    {
+    "id": "loc16",
+    "name": "Casa de los smith",
+    "description": "hogar de la familia",
+    "type": "casa",
+    "dimensionId": "dim3",
+    "population": 5
+    },
+    {
+    "id": "loc17",
+    "name": "McDonalds",
+    "description": "restaurante de comida rapida",
+    "type": "restaurante",
+    "dimensionId": "dim3",
+    "population": 100
+    },
+    {
+    "id": "loc18",
+    "name": "Venus",
+    "description": "planeta cercano al sol",
+    "type": "planeta",
+    "dimensionId": "dim1",
+    "population": 0
+    },
+    {
+    "id": "loc19",
+    "name": "Colina del barrio",
+    "description": "lugar donde morty y rick hablan",
+    "type": "exterior",
+    "dimensionId": "dim3",
+    "population": 0
+    },
+    {
+    "id": "loc20",
+    "name": "Mercurio",
+    "description": "planeta rocoso cercano al sol",
+    "type": "planeta",
+    "dimensionId": "dim1",
+    "population": 0
+    }
+],
+
+
+
+  "inventions": [  
+    {
+    "id": "inv1",
+    "name": "Pistola de portales",
+    "description": "abre portales entre dimensiones",
+    "inventorId": "char1",
+    "type": "dispositivo",
+    "dangerLevel": 10
+    },
+    {
+    "id": "inv2",
+    "name": "Caja de meeseeks",
+    "description": "crea criaturas para cumplir tareas",
+    "inventorId": "char1",
+    "type": "dispositivo",
+    "dangerLevel": 6
+    },
+    {
+    "id": "inv3",
+    "name": "Botas de gravedad",
+    "description": "permiten caminar en paredes",
+    "inventorId": "char1",
+    "type": "tecnologia",
+    "dangerLevel": 5
+    },
+    {
+    "id": "inv4",
+    "name": "Nave espacial",
+    "description": "vehiculo interplanetario de rick",
+    "inventorId": "char1",
+    "type": "vehiculo",
+    "dangerLevel": 8
+    },
+    {
+    "id": "inv5",
+    "name": "Casco de inteligencia canina",
+    "description": "aumenta inteligencia de animales",
+    "inventorId": "char1",
+    "type": "dispositivo",
+    "dangerLevel": 7
+    },
+    {
+    "id": "inv6",
+    "name": "Dispositivo omega",
+    "description": "borra personas de todas las dimensiones",
+    "inventorId": "char16",
+    "type": "arma",
+    "dangerLevel": 10
+    },
+    {
+    "id": "inv7",
+    "name": "Pistola de congelacion",
+    "description": "congela objetivos al instante",
+    "inventorId": "char1",
+    "type": "arma",
+    "dangerLevel": 7
+    },
+    {
+    "id": "inv8",
+    "name": "Microverso bateria",
+    "description": "universo usado como fuente de energia",
+    "inventorId": "char1",
+    "type": "energia",
+    "dangerLevel": 9
+    },
+    {
+    "id": "inv9",
+    "name": "Control de guardado",
+    "description": "permite reiniciar eventos",
+    "inventorId": "char1",
+    "type": "dispositivo",
+    "dangerLevel": 8
+    },
+    {
+    "id": "inv10",
+    "name": "Armadura de purga",
+    "description": "traje de combate avanzado",
+    "inventorId": "char1",
+    "type": "armadura",
+    "dangerLevel": 7
+    },
+    {
+    "id": "inv11",
+    "name": "Caja de maldiciones",
+    "description": "detecta y elimina maldiciones",
+    "inventorId": "char1",
+    "type": "dispositivo",
+    "dangerLevel": 5
+    },
+    {
+    "id": "inv12",
+    "name": "Pistola de hormonas",
+    "description": "provoca amor artificial",
+    "inventorId": "char1",
+    "type": "arma",
+    "dangerLevel": 8
+    },
+    {
+    "id": "inv13",
+    "name": "Cable interdimensional",
+    "description": "television de otras realidades",
+    "inventorId": "char1",
+    "type": "dispositivo",
+    "dangerLevel": 4
+    },
+    {
+    "id": "inv14",
+    "name": "Pistola de reduccion",
+    "description": "reduce el tamano de objetos",
+    "inventorId": "char1",
+    "type": "dispositivo",
+    "dangerLevel": 6
+    },
+    {
+    "id": "inv15",
+    "name": "Mejoras ciberneticas",
+    "description": "implantes roboticos ocultos",
+    "inventorId": "char1",
+    "type": "tecnologia",
+    "dangerLevel": 7
+    }
+]
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
