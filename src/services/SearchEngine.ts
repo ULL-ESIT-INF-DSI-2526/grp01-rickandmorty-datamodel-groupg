@@ -1,54 +1,103 @@
 import { DbManager } from "../database/DbManager.js";
 import { Character } from "../models/Character.js";
+import { Location } from "../models/Location.js";
 import { Invention } from "../models/Invention.js";
 
 /**
- * Service responsible for advanced filtering and sorting operations
- * across the multiverse data.
+ * Service responsible for advanced filtering and sorting across the multiverse.
  */
 export class SearchEngine {
-  /**
-   * Initializes the SearchEngine.
-   * @param db - The database manager instance.
-   */
-  constructor(private db: DbManager) {}
+  constructor(private readonly db: DbManager) {}
 
   /**
-   * Finds all alternative versions of a specific character by name.
-   * @param name - The name to search for (partial matches allowed).
-   * @returns An array of matching Character instances.
+   * Searches characters with multiple filters and specific sorting.
+   * @param filters - filters to apply to the search.
+   * @param sortBy - The way we want to sort, whether by "intelligence" or "name" (default is "name")
+   * @param descending - the way they are ordered, (True is descending, False is ascending)
+   * @returns Character array of the characters that the filters meet
    */
-  public findAlternativeVersions(name: string): Character[] {
-    return this.db.characters
-      .getAll()
-      .filter((c) => c.name.toLowerCase().includes(name.toLowerCase()));
-  }
+  public searchCharacters(
+    filters: { name?: string; speciesId?: string; affiliation?: string; status?: string; originId?: string },
+    sortBy: "name" | "intelligence" = "name",
+    descending: boolean = false
+  ): Character[] {
+    let results = this.db.characters.getAll();
 
-  /**
-   * Sorts characters based on a specific property.
-   * @param criteria - The property to sort by ('name' or 'intelligence').
-   * @param descending - Whether to sort in descending order.
-   * @returns A sorted array of characters.
-   */
-  public sortCharacters(criteria: "name" | "intelligence", descending = false): Character[] {
-    const sorted = [...this.db.characters.getAll()];
-    return sorted.sort((a, b) => {
-      const valA = a[criteria];
-      const valB = b[criteria];
-      const modifier = descending ? -1 : 1;
+    if (filters.name) {
+      results = results.filter(c => c.name.toLowerCase().includes(filters.name!.toLowerCase()))
+    };
+    if (filters.speciesId) {
+      results = results.filter(c => c.speciesId === filters.speciesId)
+    };
+    if (filters.affiliation) {
+      results = results.filter(c => c.affiliation === filters.affiliation)
+    };
+    if (filters.status) {
+      results = results.filter(c => c.status === filters.status)
+    };
+    if (filters.originId) {
+      results = results.filter(c => c.originDimensionId === filters.originId)
+    };
 
-      if (valA < valB) return -1 * modifier;
-      if (valA > valB) return 1 * modifier;
-      return 0;
+    return results.sort((a, b) => {
+      const valA = a[sortBy];
+      const valB = b[sortBy];
+      const mod = descending ? -1 : 1;
+      return valA < valB ? -1 * mod : valA > valB ? 1 * mod : 0;
     });
   }
 
   /**
-   * Filters inventions based on their danger level.
-   * @param minLevel - Minimum danger level (1-10).
-   * @returns An array of inventions meeting the criteria.
+   * Searches locations by name, type, or dimension.
+   * @param name - Optional name for filtering
+   * @param type - Optional type for filtering
+   * @param dimensionId -Optional ID for filtering
    */
-  public getDangerousInventions(minLevel: number): Invention[] {
-    return this.db.inventions.getAll().filter((i) => i.dangerLevel >= minLevel);
+  public searchLocations(name?: string, type?: string, dimensionId?: string): Location[] {
+    let results = this.db.locations.getAll();
+    if (name) { 
+      results = results.filter(l => l.name.toLowerCase().includes(name.toLowerCase()))
+    };
+    if (type) { 
+      results = results.filter(l => l.type === type)
+    };
+    if (dimensionId) {
+      results = results.filter(l => l.dimensionId === dimensionId)
+    };
+    return results;
+  }
+
+  /**
+   * Searches inventions by name, type, inventor, or danger level.
+   * @param name - Optional name for filtering
+   * @param type - Optional type for filtering
+   * @param inventorId - Optional ID for filtering
+   * @param dangerLevel - Optional danger level for filtering
+   */
+  public searchInventions(name?: string, type?: string, inventorId?: string, dangerLevel?: number): Invention[] {
+    let results = this.db.inventions.getAll();
+    if (name) {
+      results = results.filter(i => i.name.toLowerCase().includes(name.toLowerCase()))
+    };
+    if (type){ 
+      results = results.filter(i => i.type === type)
+    };
+    if (inventorId){
+      results = results.filter(i => i.inventorId === inventorId)
+    };
+    if (dangerLevel !== undefined) {
+      results = results.filter(i => i.dangerLevel === dangerLevel)
+    };
+    return results;
+  }
+
+  /**
+   * Locates all alternative versions of a specific character name.
+   * @param name - name of the character to find 
+   */
+  public findAlternativeVersions(name: string): Character[] {
+    return this.db.characters.getAll().filter(c => 
+      c.name.toLowerCase().includes(name.toLowerCase())
+    );
   }
 }
