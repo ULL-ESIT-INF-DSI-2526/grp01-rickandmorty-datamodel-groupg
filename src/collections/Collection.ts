@@ -1,4 +1,4 @@
-import { IEntity } from "../interfaces/IEntity";
+import { IEntity } from "../interfaces/IEntity.js";
 
 /**
  * Generic abstract collection class that manages a set of domain objects.

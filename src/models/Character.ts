@@ -21,7 +21,7 @@ export class Character implements ICharacter {
     originDimensionId: string,
     status: string,
     affiliation: string,
-    intelligence: number
+    intelligence: number,
   ) {
     this._id = id;
     this._name = name;
