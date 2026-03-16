@@ -1,7 +1,76 @@
 {
-  "characters": [],
-  "dimensions": [],
-  "species": [],
-  "locations": [],
-  "inventions": []
+  "characters": [
+    {
+    "id": "char1",
+    "name": "Rick Sanchez",
+    "description": "Científico extremadamente inteligente",
+    "speciesId": "species1",
+    "originDimensionId": "dim1",
+    "status": "Alive",
+    "affiliation": "Smith Family",
+    "intelligence": 10
+  }
+],
+  
+
+  "dimensions": [
+    {
+    "id": "dim1",
+    "name": "Dimension C-137",
+    "description": "Dimensión original de Rick",
+    "status": "Active",
+    "techLevel": 9
+  },
+  {
+    "id": "dim2",
+    "name": "Cronenberg Dimension",
+    "description": "Dimensión infestada por mutaciones",
+    "status": "Quarantined",
+    "techLevel": 6
+  }
+],
+
+  "species": [
+    {
+    "id": "species1",
+    "name": "Human",
+    "description": "Especie humana estándar",
+    "origin": "Earth",
+    "type": "Humanoid",
+    "averageLifespan": 80
+  },
+  {
+    "id": "species2",
+    "name": "Alien",
+    "description": "Especie extraterrestre genérica",
+    "origin": "Unknown planet",
+    "type": "Extraterrestrial",
+    "averageLifespan": 120
+  }
+],
+
+  "locations": [
+    {
+    "id": "loc1",
+    "name": "Earth",
+    "description": "Planeta principal de los humanos",
+    "type": "Planet",
+    "dimensionId": "dim1",
+    "population": 8000000000
+  }
+],
+
+  "inventions": [  
+    {
+    "id": "inv1",
+    "name": "Portal Gun",
+    "description": "Dispositivo que permite viajar entre dimensiones",
+    "inventorId": "char1",
+    "type": "Interdimensional device",
+    "dangerLevel": 10
+  }
+]
+
 }
+
+
