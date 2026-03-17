@@ -2,19 +2,19 @@ import { Collection } from "./Collection.js";
 import { Location } from "../models/Location.js";
 
 /**
- * Specialized collection for managing Location entities.
+ * Specific collection for managing Location.
  */
 export class LocationColl extends Collection<Location> {
   /**
    * Finds all locations of a specific type.
-   * @param type - Location type (Planet, Station, etc.).
+   * @param type - Location type.
    */
   findByType(type: string): Location[] {
     return this.getAll().filter((l) => l.type === type);
   }
 
   /**
-   * Finds all locations inside a specific dimension.
+   * Finds all locations of a specific dimension.
    * @param dimensionId - The dimension identifier.
    */
   findByDimension(dimensionId: string): Location[] {
@@ -22,7 +22,7 @@ export class LocationColl extends Collection<Location> {
   }
 
   /**
-   * Finds all locations with population above a threshold.
+   * Finds all locations with population above a minimum.
    * @param minPopulation - Minimum population.
    */
   findByMinPopulation(minPopulation: number): Location[] {
@@ -31,11 +31,11 @@ export class LocationColl extends Collection<Location> {
 
   /**
    * Orders locations by population.
-   * @param descending - Whether to sort in descending order.
+   * @param descending - Sort in descending order.
    */
   orderByPopulation(descending = false): Location[] {
     return [...this.getAll()].sort((a, b) =>
-      descending ? b.population - a.population : a.population - b.population
+      descending ? b.population - a.population : a.population - b.population,
     );
   }
 }

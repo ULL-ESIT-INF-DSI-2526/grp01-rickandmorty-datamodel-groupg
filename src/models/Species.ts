@@ -1,7 +1,7 @@
 import { ISpecies } from "../interfaces/ISpecies.js";
 
 /**
- * Domain model representing a biological species.
+ * Model that represents a biological species.
  */
 export class Species implements ISpecies {
   private _id: string;
@@ -27,7 +27,7 @@ export class Species implements ISpecies {
     this._averageLifespan = averageLifespan;
   }
 
-  /** Unique identifier */
+  /** Species id */
   get id(): string {
     return this._id;
   }
@@ -59,7 +59,7 @@ export class Species implements ISpecies {
     this._origin = value;
   }
 
-  /** Biological classification (Humanoid, Robotic, etc.) */
+  /** Biological classification of the species */
   get type(): string {
     return this._type;
   }
@@ -67,7 +67,7 @@ export class Species implements ISpecies {
     this._type = value;
   }
 
-  /** Average lifespan in Earth years */
+  /** Average lifespan of the species */
   get averageLifespan(): number {
     return this._averageLifespan;
   }
