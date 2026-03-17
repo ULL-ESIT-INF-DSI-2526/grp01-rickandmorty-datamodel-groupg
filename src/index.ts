@@ -1,7 +1,10 @@
 import { DbManager } from "./database/DbManager.js";
 import { SearchEngine } from "./services/SearchEngine.js";
 import { MultiverseManager } from "./services/MultiverseManager.js";
+import { SearchHandler } from "./ui/handlers/SearchHandler.js";
 import { CLI } from "./ui/CLI.js";
+import { EventsHandler } from "./ui/handlers/EventsHandler.js";
+import { ReportHandler } from "./ui/handlers/ReportHandler.js";
 
 /**
  * Main application entry point
@@ -16,8 +19,12 @@ async function main() {
     
     const search = new SearchEngine(db);
     const manager = new MultiverseManager(db);
+
+    const searUI = new SearchHandler(search);
+    const eventUI = new EventsHandler(manager);
+    const reportUI = new ReportHandler(manager);
     
-    const ui = new CLI(db, search, manager);
+    const ui = new CLI(db, searUI, eventUI, reportUI);
     await ui.run();
     
   } catch (error) {
@@ -26,5 +33,4 @@ async function main() {
   }
 }
 
-// Start the execution
 main();
