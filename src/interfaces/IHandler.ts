@@ -3,13 +3,13 @@
  */
 export interface IHandler {
 	/**
-	 * Method to add something to the database
+	 * Method to add an object in the database
 	 */
   handleAdd(): Promise<void>;
 
 	/**
-	 * Method to modify something of the database
-	 * @param id 
+	 * Method to modify an object of the database
+	 * @param id the id of the object to modify
 	 */
   handleModify(id: string): Promise<void>;
 }
