@@ -1,7 +1,5 @@
 import prompts from "prompts";
 import { DbManager } from "../database/DbManager.js";
-import { SearchEngine } from "../services/SearchEngine.js";
-import { MultiverseManager } from "../services/MultiverseManager.js";
 import { EntityMenu, MainOption } from "./types.js";
 import { IHandler } from "../interfaces/IHandler.js";
 import { CharacterHandler } from "./handlers/CharacterHandler.js";
@@ -9,6 +7,9 @@ import { DimensionHandler } from "./handlers/DimensionHandler.js";
 import { SpeciesHandler } from "./handlers/SpeciesHandler.js";
 import { LocationHandler } from "./handlers/LocationHandler.js";
 import { InventionHandler } from "./handlers/InventionHandler.js";
+import { SearchHandler } from "./handlers/SearchHandler.js";
+import { EventsHandler } from "./handlers/EventsHandler.js";
+import { ReportHandler } from "./handlers/ReportHandler.js";
 
 /**
  * Class that manages the interactive command interface with the user through prompts
@@ -18,8 +19,7 @@ export class CLI {
 
   constructor(
     private readonly db: DbManager,
-    private readonly search: SearchEngine,
-    private readonly manager: MultiverseManager,
+    private readonly searchUI: SearchHandler,
   ) {
     this.handlers = {
       characters: new CharacterHandler(db),
@@ -32,10 +32,10 @@ export class CLI {
 
   /**
    * Principal method to run the logic of the CLI
-   * show the first selection 
+   * show the first selection
    */
   public async run(): Promise<void> {
-    let exit = false;
+    let exit: boolean = false;
     while (!exit) {
       console.clear();
       console.log("=== RICK & MORTY MULTIVERSE CLI ===");
@@ -66,7 +66,7 @@ export class CLI {
   }
 
   /**
-   * method that manages the choise of the first selection 
+   * method that manages the choise of the first selection
    * @param choice choice of the first selection
    */
   private async handleSelection(choice: MainOption): Promise<void> {
@@ -86,13 +86,15 @@ export class CLI {
       case "inv":
         await this.crudMenu("inventions");
         break;
-
+      case "search":
+        await this.searchUI.showMenu();
+        break;
     }
   }
 
   /**
-   * Method that maneges the selection of the CRUD option 
-   * @param menu type of object that we have to do CRUD operation 
+   * Method that maneges the selection of the CRUD option
+   * @param menu type of object that we have to do CRUD operation
    */
   private async crudMenu(menu: EntityMenu): Promise<void> {
     const { op } = await prompts({
@@ -152,6 +154,4 @@ export class CLI {
         message: "Press enter to continue...",
       });
   }
-
-
 }
