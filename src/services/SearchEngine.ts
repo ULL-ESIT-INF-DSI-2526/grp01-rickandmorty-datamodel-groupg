@@ -89,15 +89,17 @@ export class SearchEngine {
   }
 
   /**
-   * Searches locations by name, type, or dimension.
+   * Searches locations by name, type, dimension or population
    * @param name - Optional name for filtering
    * @param type - Optional type for filtering
    * @param dimensionId -Optional ID for filtering
+   * @param population -Optional number of population on the location
    */
   public searchLocations(
     name?: string,
     type?: string,
     dimensionId?: string,
+    population?: number
   ): Location[] {
     let results = this.db.locations.getAll();
     if (name) {
@@ -110,6 +112,9 @@ export class SearchEngine {
     }
     if (dimensionId) {
       results = results.filter((l) => l.dimensionId === dimensionId);
+    }
+    if (population) {
+      results = results.filter((l) => l.population === population);
     }
     return results;
   }
