@@ -59,20 +59,25 @@ export class DimensionHandler implements IHandler {
 
     this.validate(field, newValue);
 
-    if (field == "ID") {
-      entity.id = newValue;
-    }
-    if (field == "Description") {
-      entity.description = newValue;
-    }
-    if (field === "name") {
-      entity.name = newValue;
-    }
-    if (field === "status") {
-      entity.status = newValue;
-    }
-    if (field === "techLevel") {
-      entity.techLevel = newValue;
+    switch (field) {
+      case "ID":
+        entity.id = newValue;
+        break;
+      case "Description":
+        entity.description = newValue;
+        break;
+      case "name":
+        entity.name = newValue;
+        break;
+      case "status":
+        entity.status = newValue;
+        break;
+      case "techLevel":
+        entity.techLevel = newValue;
+        break;
+
+      default:
+        break;
     }
   }
 

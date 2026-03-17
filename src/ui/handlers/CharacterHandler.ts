@@ -72,30 +72,32 @@ export class CharacterHandler implements IHandler {
       message: "Enter new value:",
     });
 
-    this.validate(field, newValue)
-    if (field == "ID") {
-      entity.id = newValue; 
-    }
-    if (field === "name") {
-      entity.name = newValue;
-    }
-    if (field === "description") {
-      entity.description = newValue;
-    }
-    if (field === "speciesId") {
-      entity.speciesId = newValue;
-    }
-    if (field === "originDimensionId") {
-      entity.originDimensionId = newValue;
-    }
-    if (field === "intelligence") {
-      entity.intelligence = newValue;
+    this.validate(field, newValue);
+   
+    switch (field) {
+      case "ID":
+        entity.id = newValue;
+        break;
+      case "name":
+        entity.name = newValue;
+        break;
+      case "description":
+        entity.description = newValue;
+      case "speciesId":
+        entity.speciesId = newValue;
+      case "originDimensionId":
+        entity.originDimensionId = newValue;
+      case "intelligence":
+        entity.intelligence = newValue;
+
+      default:
+        break;
     }
   }
 
   /**
    * Method to delete a character of the database
-   * @param id 
+   * @param id
    */
   async handleDelete(id: string): Promise<void> {
     this.db.characters.remove(id);
@@ -106,8 +108,7 @@ export class CharacterHandler implements IHandler {
    * @param field the selection of the user
    * @param newValue the new ID value of the user
    */
-  validate(field: string , newValue: string): void{
-    
+  validate(field: string, newValue: string): void {
     if (field === "ID" && this.db.characters.getById(newValue)) {
       throw new Error("Another character has this ID");
     }
