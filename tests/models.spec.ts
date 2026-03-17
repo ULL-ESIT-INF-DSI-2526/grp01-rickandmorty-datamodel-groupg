@@ -16,45 +16,37 @@ describe("Models – full getter/setter coverage", () => {
       "C-137",
       "Alive",
       "Council",
-      5
+      5,
     );
 
-    // id
     expect(c.id).toBe("1");
     c.id = "2";
     expect(c.id).toBe("2");
 
-    // name
     expect(c.name).toBe("Rick");
     c.name = "Morty";
     expect(c.name).toBe("Morty");
 
-    // description
     expect(c.description).toBe("desc");
     c.description = "new desc";
     expect(c.description).toBe("new desc");
 
-    // speciesId
     expect(c.speciesId).toBe("sp1");
     c.speciesId = "sp2";
     expect(c.speciesId).toBe("sp2");
 
-    // originDimensionId
     expect(c.originDimensionId).toBe("C-137");
     c.originDimensionId = "C-138";
     expect(c.originDimensionId).toBe("C-138");
 
-    // status
     expect(c.status).toBe("Alive");
     c.status = "Dead";
     expect(c.status).toBe("Dead");
 
-    // affiliation
     expect(c.affiliation).toBe("Council");
     c.affiliation = "None";
     expect(c.affiliation).toBe("None");
 
-    // intelligence
     expect(c.intelligence).toBe(5);
     c.intelligence = 10;
     expect(c.intelligence).toBe(10);
