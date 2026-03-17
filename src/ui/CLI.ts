@@ -20,6 +20,8 @@ export class CLI {
   constructor(
     private readonly db: DbManager,
     private readonly searchUI: SearchHandler,
+    private readonly eventsUI: EventsHandler,
+    private readonly reportsUI: ReportHandler,
   ) {
     this.handlers = {
       characters: new CharacterHandler(db),
@@ -89,6 +91,10 @@ export class CLI {
       case "search":
         await this.searchUI.showMenu();
         break;
+      case "events":
+        await this.eventsUI.showMenu();
+      case "reports":
+        await this.reportsUI.showMenu();
     }
   }
 
