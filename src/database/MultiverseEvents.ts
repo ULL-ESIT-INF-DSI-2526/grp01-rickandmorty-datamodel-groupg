@@ -41,7 +41,7 @@ export class MultiverseEvents {
 
     character.originDimensionId = dimensionId;
 
-    this.activityLog.push( "Character " + character.name + " traveled to dimension " + dimension.name );
+    this.activityLog.push( "Character " + character.name + " traveled to " + dimension.name );
 
   }
 

@@ -18,6 +18,17 @@ export class MultiverseManager {
     this.events = new MultiverseEvents(db);
   }
 
+
+  public getSmartestCharacters(): any[] {
+  return this.db.characters.orderByIntelligence(true);
+  }
+
+
+  public getDangerousDimensions(): any[] {
+    return this.db.dimensions.orderByTechLevel(true);
+  }
+
+
   /**
    * Registers a character traveling to another dimension.
    */
@@ -92,5 +103,12 @@ export class MultiverseManager {
         subjectId: charId
       }));
 
+  }
+
+  public getCombinedReport() {
+    const characters = this.db.characters.orderByIntelligence(true);
+    const dimensions = this.db.dimensions.orderByTechLevel(true);
+
+    return { smartestCharacter: characters[0], mostAdvancedDimension: dimensions[0] };
   }
 }
