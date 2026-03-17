@@ -1,7 +1,7 @@
 import { ICharacter } from "../interfaces/ICharacter.js";
 
 /**
- * Domain model representing a character in the multiverse.
+ * Model that respresents a character in the multiverse.
  */
 export class Character implements ICharacter {
   private _id: string;
@@ -33,7 +33,7 @@ export class Character implements ICharacter {
     this._intelligence = intelligence;
   }
 
-  /** Unique identifier */
+  /** Character id */
   get id(): string {
     return this._id;
   }
@@ -41,7 +41,7 @@ export class Character implements ICharacter {
     this._id = value;
   }
 
-  /** Character's name */
+  /** Name of the character */
   get name(): string {
     return this._name;
   }
@@ -49,7 +49,7 @@ export class Character implements ICharacter {
     this._name = value;
   }
 
-  /** Short biography or notes */
+  /** Description of the character */
   get description(): string {
     return this._description;
   }
@@ -65,7 +65,7 @@ export class Character implements ICharacter {
     this._speciesId = value;
   }
 
-  /** ID of the character's origin dimension */
+  /** ID of the character's dimension */
   get originDimensionId(): string {
     return this._originDimensionId;
   }
@@ -73,7 +73,7 @@ export class Character implements ICharacter {
     this._originDimensionId = value;
   }
 
-  /** Life status (Alive, Dead, Unknown, etc.) */
+  /** Life status of the character */
   get status() {
     return this._status;
   }
@@ -81,7 +81,7 @@ export class Character implements ICharacter {
     this._status = value;
   }
 
-  /** Group or faction the character belongs to */
+  /** Character's affiliation */
   get affiliation(): string {
     return this._affiliation;
   }
@@ -89,7 +89,7 @@ export class Character implements ICharacter {
     this._affiliation = value;
   }
 
-  /** Intelligence level (1–10) */
+  /** Intelligence level of the character */
   get intelligence(): number {
     return this._intelligence;
   }

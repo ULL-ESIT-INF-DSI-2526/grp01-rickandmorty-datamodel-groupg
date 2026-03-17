@@ -21,7 +21,6 @@ import { InventionColl } from "../collections/InventionColl.js";
 
 /**
  * Defines the structure of the JSON database file.
- * Uses plain DTO interfaces, not model instances.
  */
 export interface DbSchema {
   characters: ICharacter[];
@@ -34,8 +33,6 @@ export interface DbSchema {
 /**
  * Database manager responsible for loading and saving
  * all multiverse data using Lowdb.
- *
- * Converts raw JSON DTOs into fully validated model instances.
  */
 export class DbManager {
   /** Lowdb instance using the typed DbSchema */
@@ -68,7 +65,8 @@ export class DbManager {
   async load(): Promise<void> {
     await this.db.read();
 
-    const { characters, dimensions, species, locations, inventions } = this.db.data;
+    const { characters, dimensions, species, locations, inventions } =
+      this.db.data;
 
     this.characters.load(
       characters.map(
@@ -81,22 +79,16 @@ export class DbManager {
             c.originDimensionId,
             c.status,
             c.affiliation,
-            c.intelligence
-          )
-      )
+            c.intelligence,
+          ),
+      ),
     );
 
     this.dimensions.load(
       dimensions.map(
         (d) =>
-          new Dimension(
-            d.id,
-            d.name,
-            d.description,
-            d.status,
-            d.techLevel
-          )
-      )
+          new Dimension(d.id, d.name, d.description, d.status, d.techLevel),
+      ),
     );
 
     this.species.load(
@@ -108,9 +100,9 @@ export class DbManager {
             s.description,
             s.origin,
             s.type,
-            s.averageLifespan
-          )
-      )
+            s.averageLifespan,
+          ),
+      ),
     );
 
     this.locations.load(
@@ -122,9 +114,9 @@ export class DbManager {
             l.description,
             l.type,
             l.dimensionId,
-            l.population
-          )
-      )
+            l.population,
+          ),
+      ),
     );
 
     this.inventions.load(
@@ -136,9 +128,9 @@ export class DbManager {
             i.description,
             i.inventorId,
             i.type,
-            i.dangerLevel
-          )
-      )
+            i.dangerLevel,
+          ),
+      ),
     );
   }
 

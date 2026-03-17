@@ -20,8 +20,6 @@ import { Collection } from "../src/collections/Collection.js";
 import { IEntity } from "../src/interfaces/IEntity.js";
 
 
-//   CHARACTER COLLECTION
-
 describe("CharacterColl – full coverage", () => {
   test("findBySpecies, orderByIntelligence", () => {
     const coll = new CharacterColl();
@@ -29,9 +27,13 @@ describe("CharacterColl – full coverage", () => {
     expect(coll.findBySpecies("none")).toEqual([]);
     expect(coll.orderByIntelligence()).toEqual([]);
 
-    coll.add(new Character("1", "A", "", "sp1", "C-137", "Alive", "Council", 5));
+    coll.add(
+      new Character("1", "A", "", "sp1", "C-137", "Alive", "Council", 5),
+    );
     coll.add(new Character("2", "B", "", "sp1", "C-137", "Dead", "Council", 1));
-    coll.add(new Character("3", "C", "", "sp2", "D-99", "Alive", "Federation", 10));
+    coll.add(
+      new Character("3", "C", "", "sp2", "D-99", "Alive", "Federation", 10),
+    );
 
     expect(coll.findBySpecies("sp1").length).toBe(2);
 
@@ -43,18 +45,28 @@ describe("CharacterColl – full coverage", () => {
   test("findByOriginDimension, findByStatus, findByAffiliation", () => {
     const coll = new CharacterColl();
 
-    coll.add(new Character("1", "A", "", "sp1", "C-137", "Alive", "Council", 5));
-    coll.add(new Character("2", "B", "", "sp1", "D-99", "Dead", "Federation", 1));
-    coll.add(new Character("3", "C", "", "sp2", "C-137", "Alive", "Council", 10));
+    coll.add(
+      new Character("1", "A", "", "sp1", "C-137", "Alive", "Council", 5),
+    );
+    coll.add(
+      new Character("2", "B", "", "sp1", "D-99", "Dead", "Federation", 1),
+    );
+    coll.add(
+      new Character("3", "C", "", "sp2", "C-137", "Alive", "Council", 10),
+    );
 
-    expect(coll.findByOriginDimension("C-137").map(c => c.id)).toEqual(["1", "3"]);
-    expect(coll.findByStatus("Alive").map(c => c.id)).toEqual(["1", "3"]);
-    expect(coll.findByAffiliation("Council").map(c => c.id)).toEqual(["1", "3"]);
+    expect(coll.findByOriginDimension("C-137").map((c) => c.id)).toEqual([
+      "1",
+      "3",
+    ]);
+    expect(coll.findByStatus("Alive").map((c) => c.id)).toEqual(["1", "3"]);
+    expect(coll.findByAffiliation("Council").map((c) => c.id)).toEqual([
+      "1",
+      "3",
+    ]);
   });
 });
 
-
-//   DIMENSION COLLECTION
 
 describe("DimensionColl – full coverage", () => {
   test("findByStatus, findByTechLevel, orderByTechLevel", () => {
@@ -68,12 +80,10 @@ describe("DimensionColl – full coverage", () => {
     expect(coll.findByTechLevel(10)[0].id).toBe("2");
 
     const ordered = coll.orderByTechLevel();
-    expect(ordered.map(d => d.techLevel)).toEqual([3, 5, 10]);
+    expect(ordered.map((d) => d.techLevel)).toEqual([3, 5, 10]);
   });
 });
 
-
-//   SPECIES COLLECTION
 
 describe("SpeciesColl – full coverage", () => {
   test("findByOrigin, findByType, orderByLifespan", () => {
@@ -84,15 +94,13 @@ describe("SpeciesColl – full coverage", () => {
     coll.add(new Species("3", "C", "", "Mars", "Humanoid", 120));
 
     expect(coll.findByOrigin("Earth").length).toBe(2);
-    expect(coll.findByType("Humanoid").map(s => s.id)).toEqual(["1", "3"]);
+    expect(coll.findByType("Humanoid").map((s) => s.id)).toEqual(["1", "3"]);
 
     const ordered = coll.orderByLifespan();
-    expect(ordered.map(s => s.averageLifespan)).toEqual([40, 80, 120]);
+    expect(ordered.map((s) => s.averageLifespan)).toEqual([40, 80, 120]);
   });
 });
 
-
-//   LOCATION COLLECTION
 
 describe("LocationColl – full coverage", () => {
   test("findByDimension, findByType, findByMinPopulation, orderByPopulation", () => {
@@ -103,16 +111,14 @@ describe("LocationColl – full coverage", () => {
     coll.add(new Location("3", "C", "", "Planet", "D-99", 500));
 
     expect(coll.findByDimension("C-137").length).toBe(2);
-    expect(coll.findByType("Planet").map(l => l.id)).toEqual(["1", "3"]);
-    expect(coll.findByMinPopulation(150).map(l => l.id)).toEqual(["2", "3"]);
+    expect(coll.findByType("Planet").map((l) => l.id)).toEqual(["1", "3"]);
+    expect(coll.findByMinPopulation(150).map((l) => l.id)).toEqual(["2", "3"]);
 
     const ordered = coll.orderByPopulation();
-    expect(ordered.map(l => l.population)).toEqual([100, 200, 500]);
+    expect(ordered.map((l) => l.population)).toEqual([100, 200, 500]);
   });
 });
 
-
-//   INVENTION COLLECTION
 
 describe("InventionColl – full coverage", () => {
   test("findByInventor, findByType, orderByDanger", () => {
@@ -126,27 +132,25 @@ describe("InventionColl – full coverage", () => {
     expect(coll.findByInventor("rick").length).toBe(2);
 
     // findByType
-    expect(coll.findByType("Device").map(i => i.id)).toEqual(["1", "3"]);
+    expect(coll.findByType("Device").map((i) => i.id)).toEqual(["1", "3"]);
 
     // orderByDanger ascending
     const asc = coll.orderByDanger(false);
-    expect(asc.map(i => i.dangerLevel)).toEqual([3, 5, 10]);
+    expect(asc.map((i) => i.dangerLevel)).toEqual([3, 5, 10]);
 
     // orderByDanger descending
     const desc = coll.orderByDanger(true);
-    expect(desc.map(i => i.dangerLevel)).toEqual([10, 5, 3]);
+    expect(desc.map((i) => i.dangerLevel)).toEqual([10, 5, 3]);
   });
 });
 
-
-//   BASE COLLECTION
 
 describe("Collection base class – add/remove/replace", () => {
   class Dummy implements IEntity {
     constructor(
       public id: string,
       public name: string,
-      public description: string
+      public description: string,
     ) {}
   }
 
@@ -184,7 +188,16 @@ describe("Collection.toJSON removes underscores", () => {
   test("removes leading underscores from model fields", () => {
     const coll = new CharacterColl();
     coll.add(
-      new Character("1", "Rick", "desc", "sp1", "C-137", "Alive", "Council", 10)
+      new Character(
+        "1",
+        "Rick",
+        "desc",
+        "sp1",
+        "C-137",
+        "Alive",
+        "Council",
+        10,
+      ),
     );
 
     const json = coll.toJSON()[0];

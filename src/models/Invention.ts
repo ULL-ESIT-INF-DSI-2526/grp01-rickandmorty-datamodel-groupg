@@ -1,7 +1,7 @@
 import { IInvention } from "../interfaces/IInvention.js";
 
 /**
- * Domain model representing an invention or scientific artifact.
+ * Model that represents an invention or scientific artifact.
  */
 export class Invention implements IInvention {
   private _id: string;
@@ -27,7 +27,7 @@ export class Invention implements IInvention {
     this._dangerLevel = dangerLevel;
   }
 
-  /** Unique identifier */
+  /** Invention id */
   get id(): string {
     return this._id;
   }
@@ -51,7 +51,7 @@ export class Invention implements IInvention {
     this._description = value;
   }
 
-  /** ID of the character who invented it */
+  /** ID of the character who invented this invention */
   get inventorId(): string {
     return this._inventorId;
   }
@@ -59,7 +59,7 @@ export class Invention implements IInvention {
     this._inventorId = value;
   }
 
-  /** Category of the invention (Weapon, Device, Biotech, etc.) */
+  /** Type of invention */
   get type(): string {
     return this._type;
   }
@@ -67,7 +67,7 @@ export class Invention implements IInvention {
     this._type = value;
   }
 
-  /** Danger level (1–10) */
+  /** Danger level */
   get dangerLevel(): number {
     return this._dangerLevel;
   }
