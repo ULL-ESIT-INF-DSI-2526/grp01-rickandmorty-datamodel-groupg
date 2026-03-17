@@ -1,6 +1,9 @@
 import { DbManager } from "../database/DbManager.js";
 import { DimensionStatus } from "../interfaces/IDimension.js";
 import { MultiverseEvents } from "../database/MultiverseEvents.js";
+import { Character } from "../models/Character.js";
+import { Dimension } from "../models/Dimension.js";
+import { Invention } from "../models/Invention.js";
 
 export interface IMultiverseEvent {
   timestamp: string;
@@ -19,13 +22,15 @@ export class MultiverseManager {
   }
 
 
-  public getSmartestCharacters(): any[] {
-  return this.db.characters.orderByIntelligence(true);
+  public getSmartestCharacters(): Character[] {
+    const characters = this.db.characters.orderByIntelligence(true);
+    return characters.slice(0, 10);
   }
 
 
-  public getDangerousDimensions(): any[] {
-    return this.db.dimensions.orderByTechLevel(true);
+  public getDangerousDimensions(): Dimension[] {
+    const dimens = this.db.dimensions.orderByTechLevel(true);
+    return dimens.slice(0, 10);
   }
 
 
@@ -84,7 +89,7 @@ export class MultiverseManager {
   /**
    * Returns inventions ordered by danger level.
    */
-  public getDangerReport(): any[] {
+  public getDangerReport(): Invention[] {
     return this.db.inventions.orderByDanger(true); 
   }
 
