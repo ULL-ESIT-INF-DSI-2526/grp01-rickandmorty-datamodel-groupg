@@ -1,25 +1,23 @@
 import { IEntity } from "../interfaces/IEntity.js";
 
 /**
- * Generic abstract collection class that manages a set of domain objects.
- * Provides basic CRUD operations and serialization utilities.
- *
+ * Generic abstract collection class that manages a set of objects.
  * @typeParam T - The type of objects stored in the collection.
  */
 export abstract class Collection<T extends IEntity> {
-  /** Internal list of stored items */
+  /** List of stored items */
   protected items: T[] = [];
 
   /**
-   * Returns all items in the collection.
+   * Returns all the items in the collection.
    */
   getAll(): T[] {
     return [...this.items];
   }
 
   /**
-   * Retrieves an item by its ID.
-   * @param id - The identifier of the item.
+   * Get an item by his ID.
+   * @param id - The ID of the item.
    */
   getById(id: string): T | undefined {
     return this.items.find((i) => i.id === id);
@@ -27,7 +25,6 @@ export abstract class Collection<T extends IEntity> {
 
   /**
    * Adds a new item to the collection.
-   * Throws an error if an item with the same ID already exists.
    */
   add(item: T): void {
     if (this.getById(item.id))
@@ -36,7 +33,7 @@ export abstract class Collection<T extends IEntity> {
   }
 
   /**
-   * Removes an item by its ID.
+   * Removes an item by his ID.
    */
   remove(id: string): void {
     this.items = this.items.filter((i) => i.id !== id);
@@ -44,7 +41,6 @@ export abstract class Collection<T extends IEntity> {
 
   /**
    * Replaces an existing item with a new one.
-   * Throws an error if the item does not exist.
    */
   replace(item: T): void {
     const index = this.items.findIndex((i) => i.id === item.id);
@@ -60,15 +56,13 @@ export abstract class Collection<T extends IEntity> {
   }
 
   /**
-   * Converts the collection into a JSON-serializable array.
-   * Removes leading underscores from property names.
+   * Converts the collection into a JSON array.
    */
   toJSON(): any[] {
     return this.items.map((item) => {
       const clean: any = {};
 
       for (const key in item) {
-        // key = "_id" → cleanKey = "id"
         const cleanKey = key.startsWith("_") ? key.substring(1) : key;
         clean[cleanKey] = (item as any)[key];
       }
@@ -76,5 +70,4 @@ export abstract class Collection<T extends IEntity> {
       return clean;
     });
   }
-
 }
