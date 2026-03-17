@@ -1,7 +1,7 @@
 import { DimensionStatus, IDimension } from "../interfaces/IDimension.js";
 
 /**
- * Domain model representing a dimension in the multiverse.
+ * Model that represents a dimension in the multiverse.
  */
 export class Dimension implements IDimension {
   private _id: string;
@@ -24,7 +24,7 @@ export class Dimension implements IDimension {
     this._techLevel = techLevel;
   }
 
-  /** Unique identifier */
+  /** Dimension id */
   get id(): string {
     return this._id;
   }
@@ -32,7 +32,7 @@ export class Dimension implements IDimension {
     this._id = value;
   }
 
-  /** Human-readable name */
+  /** Name of the dimension */
   get name(): string {
     return this._name;
   }
@@ -48,7 +48,7 @@ export class Dimension implements IDimension {
     this._description = value;
   }
 
-  /** Current state of the dimension */
+  /** State of the dimension */
   get status(): DimensionStatus {
     return this._status;
   }
@@ -56,7 +56,7 @@ export class Dimension implements IDimension {
     this._status = value;
   }
 
-  /** Technological level (1–10) */
+  /** Technological level of the dimension */
   get techLevel(): number {
     return this._techLevel;
   }

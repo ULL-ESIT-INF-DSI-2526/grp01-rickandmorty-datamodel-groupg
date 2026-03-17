@@ -1,7 +1,7 @@
 import { ILocation } from "../interfaces/ILocation.js";
 
 /**
- * Domain model representing a location or planet in the multiverse.
+ * Model that represents a location or planet in the multiverse.
  */
 export class Location implements ILocation {
   private _id: string;
@@ -27,7 +27,7 @@ export class Location implements ILocation {
     this._population = population;
   }
 
-  /** Unique identifier */
+  /** Location id */
   get id(): string {
     return this._id;
   }
@@ -51,7 +51,7 @@ export class Location implements ILocation {
     this._description = value;
   }
 
-  /** Type of location (Planet, Space Station, etc.) */
+  /** Type of location */
   get type(): string {
     return this._type;
   }
@@ -67,7 +67,7 @@ export class Location implements ILocation {
     this._dimensionId = value;
   }
 
-  /** Approximate population */
+  /** Population of the location */
   get population(): number {
     return this._population;
   }

@@ -10,6 +10,6 @@ export interface IDimension extends IEntity {
   /** Current state of the dimension */
   status: DimensionStatus;
 
-  /** Technological level (1–10) */
+  /** Technological level of the dimension */
   techLevel: number;
 }

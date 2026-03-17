@@ -1,9 +1,6 @@
 /**
  * Tests for DbManager using raw model constructors.
- * Since models do NOT validate in constructors,
- * this test only checks that saving and loading works.
  */
-
 import { describe, test, expect } from "vitest";
 import { DbManager } from "../src/database/DbManager.js";
 
@@ -24,23 +21,28 @@ describe("DbManager", () => {
     const db = new DbManager(testFile);
 
     db.characters.add(
-      new Character("1", "Rick", "Scientist", "sp1", "C-137", "Alive", "Council", 10)
+      new Character(
+        "1",
+        "Rick",
+        "Scientist",
+        "sp1",
+        "C-137",
+        "Alive",
+        "Council",
+        10,
+      ),
     );
 
-    db.dimensions.add(
-      new Dimension("d1", "C-137", "Main", "Active", 8)
-    );
+    db.dimensions.add(new Dimension("d1", "C-137", "Main", "Active", 8));
 
-    db.species.add(
-      new Species("s1", "Human", "desc", "Earth", "Humanoid", 80)
-    );
+    db.species.add(new Species("s1", "Human", "desc", "Earth", "Humanoid", 80));
 
     db.locations.add(
-      new Location("l1", "Earth", "desc", "Planet", "C-137", 7000000000)
+      new Location("l1", "Earth", "desc", "Planet", "C-137", 7000000000),
     );
 
     db.inventions.add(
-      new Invention("i1", "Portal Gun", "desc", "1", "Device", 9)
+      new Invention("i1", "Portal Gun", "desc", "1", "Device", 9),
     );
 
     await db.save();

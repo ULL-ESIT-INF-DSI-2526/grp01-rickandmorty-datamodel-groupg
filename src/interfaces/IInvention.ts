@@ -1,12 +1,12 @@
 import { IEntity } from "./IEntity.js";
 
 /**
- * Represents an invention created in the multiverse.
+ * Represents an invention in the multiverse.
  */
 export interface IInvention extends IEntity {
-  /** Danger level (1–10) */
+  /** Danger level of the invention */
   dangerLevel: number;
-  /** Identification string of invention */
+  /** ID string of invention */
   inventorId: string;
   /** Type of invention */
   type: string;
