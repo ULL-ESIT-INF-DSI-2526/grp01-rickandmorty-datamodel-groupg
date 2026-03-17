@@ -94,6 +94,14 @@ export class CharacterHandler implements IHandler {
   }
 
   /**
+   * Method to delete a character of the database
+   * @param id 
+   */
+  async handleDelete(id: string): Promise<void> {
+    this.db.characters.remove(id);
+  }
+
+  /**
    *  Auxiliar function to validate the IDs of the characters
    * @param field the selection of the user
    * @param newValue the new ID value of the user

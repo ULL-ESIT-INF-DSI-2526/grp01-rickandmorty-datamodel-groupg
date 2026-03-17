@@ -12,4 +12,10 @@ export interface IHandler {
 	 * @param id the id of the object to modify
 	 */
   handleModify(id: string): Promise<void>;
+
+	/**
+	 *  Methid to eliminate an object of the database
+	 * @param id the id of the object to eliminate
+	 */
+	handleDelete(id: string): Promise<void>;
 }
