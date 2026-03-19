@@ -14,11 +14,19 @@ export class CharacterColl extends Collection<Character> {
   }
 
   /**
-   * Finds all characters with a dimensionID given.
+   * Finds all character's origin dimension by a dimensionID given.
    * @param dimensionId - The origin dimension ID.
    */
   findByOriginDimension(dimensionId: string): Character[] {
     return this.getAll().filter((c) => c.originDimensionId === dimensionId);
+  }
+
+  /**
+   * Finds all characters that are currently in a specific dimension by a dimensionID given.
+   * @param dimensionId - The origin dimension ID.
+   */
+  findByCurrentDimension(dimensionId: string): Character[] {
+    return this.getAll().filter((c) => c.currentDimensionId === dimensionId);
   }
 
   /**
