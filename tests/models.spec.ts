@@ -14,6 +14,7 @@ describe("Models – full getter/setter coverage", () => {
       "desc",
       "sp1",
       "C-137",
+      "C-137",
       "Alive",
       "Council",
       5,
