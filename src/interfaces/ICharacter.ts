@@ -7,8 +7,11 @@ export interface ICharacter extends IEntity {
   /** ID of the species the character belongs to */
   speciesId: string;
 
-  /** ID of the character's dimension */
+  /** ID of the character's origin dimension */
   originDimensionId: string;
+
+  /** ID of the character's current dimension */
+  currentDimensionId: string;
 
   /** Status of the character */
   status: string;

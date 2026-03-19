@@ -28,11 +28,11 @@ describe("CharacterColl – full coverage", () => {
     expect(coll.orderByIntelligence()).toEqual([]);
 
     coll.add(
-      new Character("1", "A", "", "sp1", "C-137", "Alive", "Council", 5),
+      new Character("1", "A", "", "sp1", "C-137", "C-137", "Alive", "Council", 5),
     );
-    coll.add(new Character("2", "B", "", "sp1", "C-137", "Dead", "Council", 1));
+    coll.add(new Character("2", "B", "", "sp1", "C-137", "C-137", "Dead", "Council", 1));
     coll.add(
-      new Character("3", "C", "", "sp2", "D-99", "Alive", "Federation", 10),
+      new Character("3", "C", "", "sp2", "D-99", "D-91",  "Alive", "Federation", 10),
     );
 
     expect(coll.findBySpecies("sp1").length).toBe(2);
@@ -42,17 +42,17 @@ describe("CharacterColl – full coverage", () => {
     expect(sorted[2].intelligence).toBe(10);
   });
 
-  test("findByOriginDimension, findByStatus, findByAffiliation", () => {
+  test("findByOriginDimension, findByStatus, findByAffiliation, findByCurrentDimension ", () => {
     const coll = new CharacterColl();
 
     coll.add(
-      new Character("1", "A", "", "sp1", "C-137", "Alive", "Council", 5),
+      new Character("1", "A", "", "sp1", "C-137", "D-91", "Alive", "Council", 5),
     );
     coll.add(
-      new Character("2", "B", "", "sp1", "D-99", "Dead", "Federation", 1),
+      new Character("2", "B", "", "sp1", "D-99", "D-23","Dead", "Federation", 1),
     );
     coll.add(
-      new Character("3", "C", "", "sp2", "C-137", "Alive", "Council", 10),
+      new Character("3", "C", "", "sp2", "C-137", "D-44", "Alive", "Council", 10),
     );
 
     expect(coll.findByOriginDimension("C-137").map((c) => c.id)).toEqual([
@@ -64,6 +64,9 @@ describe("CharacterColl – full coverage", () => {
       "1",
       "3",
     ]);
+
+    expect(coll.findByCurrentDimension("D-91").map((c) => c.id)).toEqual(["1"]);
+    expect(coll.findByCurrentDimension("none")).toEqual([]);
   });
 });
 
@@ -194,6 +197,7 @@ describe("Collection.toJSON removes underscores", () => {
         "desc",
         "sp1",
         "C-137",
+        "C-32",
         "Alive",
         "Council",
         10,

@@ -77,6 +77,7 @@ export class DbManager {
             c.description,
             c.speciesId,
             c.originDimensionId,
+            c.currentDimensionId,
             c.status,
             c.affiliation,
             c.intelligence,
