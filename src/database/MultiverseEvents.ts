@@ -39,7 +39,7 @@ export class MultiverseEvents {
       throw new Error("Cannot travel to destroyed dimension");
     }
 
-    character.originDimensionId = dimensionId;
+    character.currentDimensionId = dimensionId;
 
     this.activityLog.push( "Character " + character.name + "(" + character.id +") traveled to " + dimension.name );
 
