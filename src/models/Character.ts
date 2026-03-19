@@ -12,6 +12,7 @@ export class Character implements ICharacter {
   private _status: string;
   private _affiliation: string;
   private _intelligence: number;
+  private _currentDimensionId: string;
 
   constructor(
     id: string,
@@ -19,6 +20,7 @@ export class Character implements ICharacter {
     description: string,
     speciesId: string,
     originDimensionId: string,
+    currentDimensionId: string,
     status: string,
     affiliation: string,
     intelligence: number,
@@ -31,6 +33,7 @@ export class Character implements ICharacter {
     this._status = status;
     this._affiliation = affiliation;
     this._intelligence = intelligence;
+    this._currentDimensionId = currentDimensionId;
   }
 
   /** Character id */
@@ -65,12 +68,20 @@ export class Character implements ICharacter {
     this._speciesId = value;
   }
 
-  /** ID of the character's dimension */
+  /** ID of the character's origin dimension */
   get originDimensionId(): string {
     return this._originDimensionId;
   }
   set originDimensionId(value: string) {
     this._originDimensionId = value;
+  }
+
+  /** ID of the character's current dimension */
+  get currentDimensionId(): string {
+    return this._currentDimensionId;
+  }
+  set currentDimensionId(value: string) {
+    this._currentDimensionId = value;
   }
 
   /** Life status of the character */

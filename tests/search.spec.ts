@@ -18,13 +18,13 @@ describe("SearchEngine Full Coverage Tests", () => {
 
     // Data for Character coverage
     db.characters.add(
-      new Character("c1", "Rick", "Desc", "s1", "d1", "Alive", "Council", 10),
+      new Character("c1", "Rick", "Desc", "s1", "d1", "d2", "Alive", "Council", 10),
     );
     db.characters.add(
-      new Character("c2", "Morty", "Desc", "s1", "d1", "Alive", "Family", 5),
+      new Character("c2", "Morty", "Desc", "s1", "d1", "d3", "Alive", "Family", 5),
     );
     db.characters.add(
-      new Character("c3", "Morty Clone", "Desc", "s2", "d2", "Dead", "None", 5),
+      new Character("c3", "Morty Clone", "Desc", "s2", "d2", "d4", "Dead", "None", 5),
     );
 
     // Data for Location coverage
