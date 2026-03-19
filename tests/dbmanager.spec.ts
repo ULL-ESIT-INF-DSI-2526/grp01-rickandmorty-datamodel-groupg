@@ -27,6 +27,7 @@ describe("DbManager", () => {
         "Scientist",
         "sp1",
         "C-137",
+        "C-137",
         "Alive",
         "Council",
         10,
