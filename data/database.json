@@ -8,7 +8,8 @@
       "originDimensionId": "dim1",
       "status": "Alive",
       "affiliation": "familia smith",
-      "intelligence": 10
+      "intelligence": 10,
+      "currentDimensionId": "dim3"
     },
     {
       "id": "char2",

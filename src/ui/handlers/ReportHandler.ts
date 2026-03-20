@@ -1,5 +1,7 @@
 import prompts from "prompts";
 import { MultiverseManager } from "../../services/MultiverseManager.js";
+import { convertProcessSignalToExitCode } from "node:util";
+import { text } from "node:stream/consumers";
 
 /**
  * @class ReportsUIHandler
@@ -20,10 +22,8 @@ export class ReportHandler {
       choices: [
         { title: "Active Dimensions Tech Level", value: "tech" },
         { title: "Character Alternative Versions Count", value: "versions" },
-        {
-          title: "Most Dangerous Inventions Currently Deployed",
-          value: "danger",
-        },
+        { title: "Character Registry", value: "registry" },
+        { title: "Most Dangerous Inventions Currently Deployed", value: "danger" },
         { title: "Back", value: "back" },
       ],
     });
@@ -34,7 +34,7 @@ export class ReportHandler {
       return;
     }
 
-    this.displayReport(reportType);
+    await this.displayReport(reportType);
 
     await prompts({
       type: "text",
@@ -45,9 +45,10 @@ export class ReportHandler {
 
   /**
    * Executes the manager logic and displays the data in table format
-   * @param type The type of report to generate
+   * @param type The type of report to generate.
+   * @returns A promise that resolves when the report is fully displayed
    */
-  private displayReport(type: string): void {
+  private async displayReport(type: string): Promise<void> {
     console.log(`\n--- Generating ${type.toUpperCase()} Report ---`);
 
     if (type === "tech") {
@@ -58,6 +59,24 @@ export class ReportHandler {
       console.table(this.manager.getVersionAnalytics());
     } else if (type === "danger") {
       console.table(this.manager.getDangerReport());
+    } else if (type === "registry") {
+      await this.registryChar();
+    }
+  }
+
+  /**
+   * Asks for a character ID and displays its travel registry
+   * @private
+   */
+  private async registryChar(): Promise<void> {
+    const { id } = await prompts({
+      type: "text",
+      name: "id",
+      message: "Character id: ",
+    });
+
+    if (id) {
+      console.table(this.manager.getCharacterHistory(id));
     }
   }
 }
