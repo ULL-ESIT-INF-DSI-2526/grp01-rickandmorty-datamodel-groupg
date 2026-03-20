@@ -22,7 +22,7 @@ export class MultiverseEvents {
   /**
   * Moves a character to another dimension.
   */
-  interdimensionalTravel(characterId: string, dimensionId: string): void {
+  interdimensionalTravel(characterId: string, dimensionId: string, reason: string): void {
 
     const character = this.db.characters.getById(characterId);
     const dimension = this.db.dimensions.getById(dimensionId);
@@ -41,7 +41,7 @@ export class MultiverseEvents {
 
     character.currentDimensionId = dimensionId;
 
-    this.activityLog.push( "Character " + character.name + "(" + character.id +") traveled to " + dimension.name );
+    this.activityLog.push( "Character " + character.name + "(" + character.id +") traveled to " + dimension.name + "(reason: " + reason + ")" );
 
   }
 

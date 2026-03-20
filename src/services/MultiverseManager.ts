@@ -4,17 +4,8 @@ import { MultiverseEvents } from "../database/MultiverseEvents.js";
 import { Character } from "../models/Character.js";
 import { Dimension } from "../models/Dimension.js";
 import { Invention } from "../models/Invention.js";
+import { IMultiverseEvent } from "../interfaces/IMultiverseEvent.js";
 
-/**
- * Represents a structured multiverse event.
- * Used to expose event information in a consistent format.
- */
-export interface IMultiverseEvent {
-  timestamp: string;
-  type: "TRAVEL" | "DIMENSION_CHANGE" | "INVENTION_DEPLOY";
-  description: string;
-  subjectId: string;
-}
 
 /**
  * Service layer responsible for managing multiverse operations.
@@ -25,9 +16,6 @@ export interface IMultiverseEvent {
  */
 export class MultiverseManager {
   
-  /**
- * Handles multiverse event logic such as travel and dimension changes.
- */
   private events: MultiverseEvents;
 
   /**
@@ -73,7 +61,7 @@ export class MultiverseManager {
    * @param reason - Reason for the travel (not stored).
    */
   public async registerTravel(charId: string, destId: string, reason: string): Promise<void> {
-    this.events.interdimensionalTravel(charId, destId);
+    this.events.interdimensionalTravel(charId, destId, reason);
     await this.events.save(); 
   }
 
