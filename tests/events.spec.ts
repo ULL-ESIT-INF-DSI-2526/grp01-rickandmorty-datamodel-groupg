@@ -6,99 +6,96 @@ import { Dimension } from "../src/models/Dimension.js";
 
 describe("Events", () => {
 
-  test("Register travel updates current dimension and history", async () => {
-    const db = new DbManager();
-    const manager = new MultiverseManager(db);
+test("Register travel updates current dimension and history", async () => {
+const db = new DbManager("data/test-db.json");
+const manager = new MultiverseManager(db);
 
-    const dim1 = new Dimension("d1", "A", "", "Active", 5);
-    const dim2 = new Dimension("d2", "B", "", "Active", 6);
+const dim1 = new Dimension("d1", "A", "", "Active", 5);
+const dim2 = new Dimension("d2", "B", "", "Active", 6);
 
-    db.dimensions.add(dim1);
-    db.dimensions.add(dim2);
+db.dimensions.add(dim1);
+db.dimensions.add(dim2);
 
-    const char = new Character("c1", "Rick", "", "sp1", "d1", "d1", "Alive", "None", 10);
-    db.characters.add(char);
+const char = new Character("c1", "Rick", "", "sp1", "d1", "d1", "Alive", "None", 10);
+db.characters.add(char);
 
-    await manager.registerTravel("c1", "d2", "test");
+await manager.registerTravel("c1", "d2", "test");
 
-    const updated = db.characters.getById("c1");
+const updated = db.characters.getById("c1");
 
-    expect(updated?.currentDimensionId).toBe("d2");
+expect(updated?.currentDimensionId).toBe("d2");
 
-    const history = manager.getCharacterHistory("c1");
-    expect(history.length).toBeGreaterThan(0);
-  });
+const history = manager.getCharacterHistory("c1");
+expect(history.length).toBeGreaterThan(0);
+});
 
+test("Destroy dimension changes status if empty", async () => {
+const db = new DbManager("data/test-db.json");
+const manager = new MultiverseManager(db);
 
-  test("Destroy dimension changes status if empty", async () => {
-    const db = new DbManager();
-    const manager = new MultiverseManager(db);
+const dim = new Dimension("d1", "A", "", "Active", 5);
+db.dimensions.add(dim);
 
-    const dim = new Dimension("d1", "A", "", "Active", 5);
-    db.dimensions.add(dim);
+await manager.updateDimensionState("d1", "Destroyed", "test");
 
-    await manager.updateDimensionState("d1", "Destroyed", "test");
+const updated = db.dimensions.getById("d1");
 
-    const updated = db.dimensions.getById("d1");
+expect(updated?.status).toBe("Destroyed");
+});
 
-    expect(updated?.status).toBe("Destroyed");
-  });
+test("Cannot destroy dimension with characters inside", async () => {
+const db = new DbManager("data/test-db.json");
+const manager = new MultiverseManager(db);
 
+const dim = new Dimension("d1", "A", "", "Active", 5);
+db.dimensions.add(dim);
 
-  test("Cannot destroy dimension with characters inside", async () => {
-    const db = new DbManager();
-    const manager = new MultiverseManager(db);
+const char = new Character("c1", "Rick", "", "sp1", "d1", "d1", "Alive", "None", 10);
+db.characters.add(char);
 
-    const dim = new Dimension("d1", "A", "", "Active", 5);
-    db.dimensions.add(dim);
+await expect(
+manager.updateDimensionState("d1", "Destroyed", "test")
+).rejects.toThrow();
+});
 
-    const char = new Character("c1", "Rick", "", "sp1", "d1", "d1", "Alive", "None", 10);
-    db.characters.add(char);
+test("Throws if character does not exist", async () => {
+const db = new DbManager("data/test-db.json");
+const manager = new MultiverseManager(db);
 
-    await expect(
-      manager.updateDimensionState("d1", "Destroyed", "test")
-    ).rejects.toThrow();
-  });
+db.dimensions.add(new Dimension("d1", "A", "", "Active", 5));
 
-  test("Throws if character does not exist", async () => {
-  const db = new DbManager();
-  const manager = new MultiverseManager(db);
-
-  db.dimensions.add(new Dimension("d1", "A", "", "Active", 5));
-
-  await expect(
-    manager.registerTravel("fake", "d1", "test")
-  ).rejects.toThrow();
+await expect(
+manager.registerTravel("fake", "d1", "test")
+).rejects.toThrow();
 });
 
 test("Throws if dimension does not exist", async () => {
-  const db = new DbManager();
-  const manager = new MultiverseManager(db);
+const db = new DbManager("data/test-db.json");
+const manager = new MultiverseManager(db);
 
-  db.characters.add(new Character("c1", "Rick", "", "sp1", "d1", "d1", "Alive", "None", 10));
+db.characters.add(new Character("c1", "Rick", "", "sp1", "d1", "d1", "Alive", "None", 10));
 
-  await expect(
-    manager.registerTravel("c1", "fake", "test")
-  ).rejects.toThrow();
+await expect(
+manager.registerTravel("c1", "fake", "test")
+).rejects.toThrow();
 });
 
 test("Cannot travel to destroyed dimension", async () => {
-  const db = new DbManager();
-  const manager = new MultiverseManager(db);
+const db = new DbManager("data/test-db.json");
+const manager = new MultiverseManager(db);
 
-  const dim1 = new Dimension("d1", "A", "", "Active", 5);
-  const dim2 = new Dimension("d2", "B", "", "Destroyed", 6);
+const dim1 = new Dimension("d1", "A", "", "Active", 5);
+const dim2 = new Dimension("d2", "B", "", "Destroyed", 6);
 
-  db.dimensions.add(dim1);
-  db.dimensions.add(dim2);
+db.dimensions.add(dim1);
+db.dimensions.add(dim2);
 
-  const char = new Character("c1", "Rick", "", "sp1", "d1", "d1", "Alive", "None", 10);
-  db.characters.add(char);
+const char = new Character("c1", "Rick", "", "sp1", "d1", "d1", "Alive", "None", 10);
+db.characters.add(char);
 
-  await expect(
-    manager.registerTravel("c1", "d2", "test")
-  ).rejects.toThrow();
+await expect(
+manager.registerTravel("c1", "d2", "test")
+).rejects.toThrow();
 });
 
 });
-
