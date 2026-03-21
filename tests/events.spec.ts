@@ -8,7 +8,7 @@ import { Invention } from "../src/models/Invention.js";
 describe("Events", () => {
 
   test("Register travel updates current dimension and history", async () => {
-    const db = new DbManager();
+    const db = new DbManager("data/test-db.json");
     const manager = new MultiverseManager(db);
 
     const dim1 = new Dimension("d1", "A", "", "Active", 5);
@@ -32,7 +32,7 @@ describe("Events", () => {
 
 
   test("Destroy dimension changes status if empty", async () => {
-    const db = new DbManager();
+    const db = new DbManager("data/test-db.json");
     const manager = new MultiverseManager(db);
 
     const dim = new Dimension("d1", "A", "", "Active", 5);
@@ -47,7 +47,7 @@ describe("Events", () => {
 
 
   test("Cannot destroy dimension with characters inside", async () => {
-    const db = new DbManager();
+    const db = new DbManager("data/test-db.json");
     const manager = new MultiverseManager(db);
 
     const dim = new Dimension("d1", "A", "", "Active", 5);
@@ -67,7 +67,7 @@ describe("Events", () => {
 describe("Reports", () => {
 
   test("Get smartest characters returns ordered list", () => {
-    const db = new DbManager();
+    const db = new DbManager("data/test-db.json");
     const manager = new MultiverseManager(db);
 
     db.characters.add(new Character("1", "A", "", "sp1", "d1", "d1", "Alive", "None", 5));
@@ -95,7 +95,7 @@ describe("Reports", () => {
 
 
   test("Get danger report returns inventions ordered by danger", () => {
-    const db = new DbManager();
+    const db = new DbManager("data/test-db.json");
     const manager = new MultiverseManager(db);
 
     db.inventions.add(new Invention("1", "A", "", "c1", "Tool", 5));
@@ -109,7 +109,7 @@ describe("Reports", () => {
 
 
   test("Get character history returns events", async () => {
-    const db = new DbManager();
+    const db = new DbManager("data/test-db.json");
     const manager = new MultiverseManager(db);
 
     const dim1 = new Dimension("d1", "A", "", "Active", 5);
@@ -131,7 +131,7 @@ describe("Reports", () => {
 
 
   test("Combined report returns data", () => {
-    const db = new DbManager();
+    const db = new DbManager("data/test-db.json");
     const manager = new MultiverseManager(db);
 
     db.characters.add(new Character("1", "A", "", "sp1", "d1", "d1", "Alive", "None", 10));

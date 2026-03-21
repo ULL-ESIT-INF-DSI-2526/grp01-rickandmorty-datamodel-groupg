@@ -19,7 +19,8 @@
       "originDimensionId": "dim3",
       "status": "Alive",
       "affiliation": "familia smith",
-      "intelligence": 6
+      "intelligence": 6,
+      "currentDimensionId": "dim5"
     },
     {
       "id": "char3",
@@ -29,7 +30,8 @@
       "originDimensionId": "dim3",
       "status": "Alive",
       "affiliation": "familia smith",
-      "intelligence": 7
+      "intelligence": 7,
+      "currentDimensionId": "dim3"
     },
     {
       "id": "char4",
@@ -39,7 +41,8 @@
       "originDimensionId": "dim3",
       "status": "Alive",
       "affiliation": "familia smith",
-      "intelligence": 8
+      "intelligence": 8,
+      "currentDimensionId": "dim3"
     },
     {
       "id": "char5",
@@ -49,7 +52,8 @@
       "originDimensionId": "dim3",
       "status": "Alive",
       "affiliation": "familia smith",
-      "intelligence": 4
+      "intelligence": 4,
+      "currentDimensionId": "dim3"
     },
     {
       "id": "char6",
@@ -59,7 +63,8 @@
       "originDimensionId": "dim3",
       "status": "Alive",
       "affiliation": "resistencia espacial",
-      "intelligence": 8
+      "intelligence": 8,
+      "currentDimensionId": "dim3"
     },
     {
       "id": "char7",
@@ -69,7 +74,8 @@
       "originDimensionId": "dim1",
       "status": "Alive",
       "affiliation": "independiente",
-      "intelligence": 6
+      "intelligence": 6,
+      "currentDimensionId": "dim1"
     },
     {
       "id": "char8",
@@ -79,7 +85,8 @@
       "originDimensionId": "dim3",
       "status": "Alive",
       "affiliation": "familia smith",
-      "intelligence": 2
+      "intelligence": 2,
+      "currentDimensionId": "dim3"
     },
     {
       "id": "char9",
@@ -89,7 +96,8 @@
       "originDimensionId": "dim1",
       "status": "Alive",
       "affiliation": "amigos de rick",
-      "intelligence": 7
+      "intelligence": 7,
+      "currentDimensionId": "dim1"
     },
     {
       "id": "char10",
@@ -99,7 +107,8 @@
       "originDimensionId": "dim1",
       "status": "Alive",
       "affiliation": "resistencia",
-      "intelligence": 8
+      "intelligence": 8,
+      "currentDimensionId": "dim1"
     },
     {
       "id": "char11",
@@ -109,7 +118,8 @@
       "originDimensionId": "dim1",
       "status": "Alive",
       "affiliation": "amigos de rick",
-      "intelligence": 7
+      "intelligence": 7,
+      "currentDimensionId": "dim1"
     },
     {
       "id": "char12",
@@ -119,7 +129,8 @@
       "originDimensionId": "dim3",
       "status": "Alive",
       "affiliation": "ninguna",
-      "intelligence": 5
+      "intelligence": 5,
+      "currentDimensionId": "dim3"
     },
     {
       "id": "char13",
@@ -129,7 +140,8 @@
       "originDimensionId": "dim1",
       "status": "Alive",
       "affiliation": "vindicadores",
-      "intelligence": 5
+      "intelligence": 5,
+      "currentDimensionId": "dim1"
     },
     {
       "id": "char14",
@@ -139,7 +151,8 @@
       "originDimensionId": "dim1",
       "status": "Alive",
       "affiliation": "ninguna",
-      "intelligence": 9
+      "intelligence": 9,
+      "currentDimensionId": "dim1"
     },
     {
       "id": "char15",
@@ -149,7 +162,8 @@
       "originDimensionId": "dim3",
       "status": "Alive",
       "affiliation": "ciudadela",
-      "intelligence": 9
+      "intelligence": 9,
+      "currentDimensionId": "dim3"
     },
     {
       "id": "char16",
@@ -159,7 +173,8 @@
       "originDimensionId": "dim2",
       "status": "Alive",
       "affiliation": "ninguna",
-      "intelligence": 10
+      "intelligence": 10,
+      "currentDimensionId": "dim2"
     },
     {
       "id": "char17",
@@ -169,7 +184,8 @@
       "originDimensionId": "dim1",
       "status": "Dead",
       "affiliation": "federacion galactica",
-      "intelligence": 7
+      "intelligence": 7,
+      "currentDimensionId": "dim1"
     },
     {
       "id": "char18",
@@ -179,7 +195,8 @@
       "originDimensionId": "dim1",
       "status": "Dead",
       "affiliation": "independiente",
-      "intelligence": 6
+      "intelligence": 6,
+      "currentDimensionId": "dim1"
     },
     {
       "id": "char19",
@@ -189,7 +206,8 @@
       "originDimensionId": "dim1",
       "status": "Alive",
       "affiliation": "oceano",
-      "intelligence": 7
+      "intelligence": 7,
+      "currentDimensionId": "dim1"
     },
     {
       "id": "char20",
@@ -199,7 +217,8 @@
       "originDimensionId": "dim1",
       "status": "Alive",
       "affiliation": "vindicadores",
-      "intelligence": 8
+      "intelligence": 8,
+      "currentDimensionId": "dim1"
     },
     {
       "id": "char21",
@@ -209,7 +228,8 @@
       "originDimensionId": "dim3",
       "status": "Alive",
       "affiliation": "escuela",
-      "intelligence": 6
+      "intelligence": 6,
+      "currentDimensionId": "dim3"
     },
     {
       "id": "char22",
@@ -219,7 +239,8 @@
       "originDimensionId": "dim3",
       "status": "Alive",
       "affiliation": "escuela",
-      "intelligence": 6
+      "intelligence": 6,
+      "currentDimensionId": "dim3"
     },
     {
       "id": "char23",
@@ -229,7 +250,8 @@
       "originDimensionId": "dim3",
       "status": "Alive",
       "affiliation": "escuela",
-      "intelligence": 6
+      "intelligence": 6,
+      "currentDimensionId": "dim3"
     },
     {
       "id": "char24",
@@ -239,7 +261,8 @@
       "originDimensionId": "dim3",
       "status": "Alive",
       "affiliation": "escuela",
-      "intelligence": 5
+      "intelligence": 5,
+      "currentDimensionId": "dim3"
     },
     {
       "id": "char25",
@@ -249,7 +272,8 @@
       "originDimensionId": "dim1",
       "status": "Dead",
       "affiliation": "ninguna",
-      "intelligence": 6
+      "intelligence": 6,
+      "currentDimensionId": "dim1"
     },
     {
       "id": "char26",
@@ -259,7 +283,8 @@
       "originDimensionId": "dim9",
       "status": "Alive",
       "affiliation": "ninguna",
-      "intelligence": 6
+      "intelligence": 6,
+      "currentDimensionId": "dim9"
     },
     {
       "id": "char27",
@@ -269,7 +294,8 @@
       "originDimensionId": "dim14",
       "status": "Alive",
       "affiliation": "ciudadela",
-      "intelligence": 7
+      "intelligence": 7,
+      "currentDimensionId": "dim14"
     },
     {
       "id": "char28",
@@ -279,7 +305,8 @@
       "originDimensionId": "dim1",
       "status": "Dead",
       "affiliation": "ninguna",
-      "intelligence": 7
+      "intelligence": 7,
+      "currentDimensionId": "dim1"
     },
     {
       "id": "char29",
@@ -289,7 +316,8 @@
       "originDimensionId": "dim3",
       "status": "Alive",
       "affiliation": "anatomy park",
-      "intelligence": 6
+      "intelligence": 6,
+      "currentDimensionId": "dim3"
     },
     {
       "id": "char30",
@@ -299,7 +327,8 @@
       "originDimensionId": "dim1",
       "status": "Alive",
       "affiliation": "planeta musical",
-      "intelligence": 8
+      "intelligence": 8,
+      "currentDimensionId": "dim1"
     }
   ],
   "dimensions": [
