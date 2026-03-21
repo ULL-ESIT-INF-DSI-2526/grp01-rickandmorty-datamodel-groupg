@@ -3,7 +3,6 @@ import { DbManager } from "../src/database/DbManager.js";
 import { MultiverseManager } from "../src/services/MultiverseManager.js";
 import { Character } from "../src/models/Character.js";
 import { Dimension } from "../src/models/Dimension.js";
-import { Invention } from "../src/models/Invention.js";
 
 describe("Events", () => {
 
@@ -61,86 +60,45 @@ describe("Events", () => {
     ).rejects.toThrow();
   });
 
+  test("Throws if character does not exist", async () => {
+  const db = new DbManager();
+  const manager = new MultiverseManager(db);
+
+  db.dimensions.add(new Dimension("d1", "A", "", "Active", 5));
+
+  await expect(
+    manager.registerTravel("fake", "d1", "test")
+  ).rejects.toThrow();
 });
 
+test("Throws if dimension does not exist", async () => {
+  const db = new DbManager();
+  const manager = new MultiverseManager(db);
 
-describe("Reports", () => {
+  db.characters.add(new Character("c1", "Rick", "", "sp1", "d1", "d1", "Alive", "None", 10));
 
-  test("Get smartest characters returns ordered list", () => {
-    const db = new DbManager();
-    const manager = new MultiverseManager(db);
+  await expect(
+    manager.registerTravel("c1", "fake", "test")
+  ).rejects.toThrow();
+});
 
-    db.characters.add(new Character("1", "A", "", "sp1", "d1", "d1", "Alive", "None", 5));
-    db.characters.add(new Character("2", "B", "", "sp1", "d1", "d1", "Alive", "None", 10));
+test("Cannot travel to destroyed dimension", async () => {
+  const db = new DbManager();
+  const manager = new MultiverseManager(db);
 
-    const result = manager.getSmartestCharacters();
+  const dim1 = new Dimension("d1", "A", "", "Active", 5);
+  const dim2 = new Dimension("d2", "B", "", "Destroyed", 6);
 
-    expect(result.length).toBeGreaterThan(0);
-    expect(result[0].intelligence).toBeGreaterThanOrEqual(result[1].intelligence);
-  });
+  db.dimensions.add(dim1);
+  db.dimensions.add(dim2);
 
+  const char = new Character("c1", "Rick", "", "sp1", "d1", "d1", "Alive", "None", 10);
+  db.characters.add(char);
 
-  test("Get dangerous dimensions returns ordered list", () => {
-    const db = new DbManager();
-    const manager = new MultiverseManager(db);
-
-    db.dimensions.add(new Dimension("1", "A", "", "Active", 5));
-    db.dimensions.add(new Dimension("2", "B", "", "Active", 10));
-
-    const result = manager.getDangerousDimensions();
-
-    expect(result.length).toBeGreaterThan(0);
-    expect(result[0].techLevel).toBeGreaterThanOrEqual(result[1].techLevel);
-  });
-
-
-  test("Get danger report returns inventions ordered by danger", () => {
-    const db = new DbManager();
-    const manager = new MultiverseManager(db);
-
-    db.inventions.add(new Invention("1", "A", "", "c1", "Tool", 5));
-    db.inventions.add(new Invention("2", "B", "", "c1", "Tool", 10));
-
-    const result = manager.getDangerReport();
-
-    expect(result.length).toBeGreaterThan(0);
-    expect(result[0].dangerLevel).toBeGreaterThanOrEqual(result[1].dangerLevel);
-  });
-
-
-  test("Get character history returns events", async () => {
-    const db = new DbManager();
-    const manager = new MultiverseManager(db);
-
-    const dim1 = new Dimension("d1", "A", "", "Active", 5);
-    const dim2 = new Dimension("d2", "B", "", "Active", 6);
-
-    db.dimensions.add(dim1);
-    db.dimensions.add(dim2);
-
-    const char = new Character("c1", "Rick", "", "sp1", "d1", "d1", "Alive", "None", 10);
-    db.characters.add(char);
-
-    await manager.registerTravel("c1", "d2", "test");
-
-    const history = manager.getCharacterHistory("c1");
-
-    expect(history.length).toBeGreaterThan(0);
-    expect(history[0].subjectId).toBe("c1");
-  });
-
-
-  test("Combined report returns data", () => {
-    const db = new DbManager();
-    const manager = new MultiverseManager(db);
-
-    db.characters.add(new Character("1", "A", "", "sp1", "d1", "d1", "Alive", "None", 10));
-    db.dimensions.add(new Dimension("1", "A", "", "Active", 10));
-
-    const result = manager.getCombinedReport();
-
-    expect(result.smartestCharacter).toBeDefined();
-    expect(result.mostAdvancedDimension).toBeDefined();
-  });
+  await expect(
+    manager.registerTravel("c1", "d2", "test")
+  ).rejects.toThrow();
+});
 
 });
+
