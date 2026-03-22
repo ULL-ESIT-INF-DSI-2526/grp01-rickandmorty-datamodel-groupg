@@ -4,16 +4,6 @@ import { MultiverseManager } from "../src/services/MultiverseManager.js";
 import { Character } from "../src/models/Character.js";
 import { Dimension } from "../src/models/Dimension.js";
 import { Invention } from "../src/models/Invention.js";
-import fs from "fs";
-
-if (!fs.existsSync("data")) {
-  fs.mkdirSync("data");
-}
-
-if (!fs.existsSync("data/test-db.json")) {
-  fs.writeFileSync("data/test-db.json", "{}");
-}
-
 
 describe("Reports", () => {
   test("Get smartest characters returns ordered list", () => {
@@ -71,7 +61,7 @@ describe("Reports", () => {
     const report = manager.getTechReport();
 
     expect(report.dimensions.length).toBe(2);
-    expect(report.average).toBe("10.0");
+    expect(report.average).toBe("10.0"); // (5 + 15) / 2
   });
 
   test("Get character history returns events", async () => {
