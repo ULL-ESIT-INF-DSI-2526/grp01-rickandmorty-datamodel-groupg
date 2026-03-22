@@ -105,6 +105,9 @@ export class MultiverseManager {
     state: DimensionStatus,
     reason: string,
   ): Promise<void> {
+    if (!this.db.dimensions.getById(id)) {
+      throw new Error("Dimension doesnt exists.");
+    }
     if (state === "Destroyed") {
       this.events.destroyDimension(id);
     }
