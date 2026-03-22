@@ -1,53 +1,15 @@
 {
-  "characters": [
-    {
-      "id": "1",
-      "name": "Rick",
-      "description": "Scientist",
-      "speciesId": "sp1",
-      "originDimensionId": "C-137",
-      "status": "Alive",
-      "affiliation": "Council",
-      "intelligence": 10
-    }
-  ],
+  "characters": [],
   "dimensions": [
     {
       "id": "d1",
-      "name": "C-137",
-      "description": "Main",
-      "status": "Active",
-      "techLevel": 8
+      "name": "A",
+      "description": "",
+      "status": "Destroyed",
+      "techLevel": 5
     }
   ],
-  "species": [
-    {
-      "id": "s1",
-      "name": "Human",
-      "description": "desc",
-      "origin": "Earth",
-      "type": "Humanoid",
-      "averageLifespan": 80
-    }
-  ],
-  "locations": [
-    {
-      "id": "l1",
-      "name": "Earth",
-      "description": "desc",
-      "type": "Planet",
-      "dimensionId": "C-137",
-      "population": 7000000000
-    }
-  ],
-  "inventions": [
-    {
-      "id": "i1",
-      "name": "Portal Gun",
-      "description": "desc",
-      "inventorId": "1",
-      "type": "Device",
-      "dangerLevel": 9
-    }
-  ]
+  "species": [],
+  "locations": [],
+  "inventions": []
 }
