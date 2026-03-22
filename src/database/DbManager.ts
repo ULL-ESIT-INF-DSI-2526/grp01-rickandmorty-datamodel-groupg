@@ -49,7 +49,7 @@ export class DbManager {
 
   /**
    * Creates a new database manager.
-   * @param path - Path to the JSON file.
+   * @param filePath - Path to the JSON file.
    */
   constructor(filePath = "data/database.json") {
     const dir = path.dirname(filePath);
