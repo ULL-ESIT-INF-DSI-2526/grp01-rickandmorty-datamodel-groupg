@@ -20,3 +20,6 @@ Ejecutar la aplicación:
 ```
 npm start
 ```
+
+[![CI Tests](https://github.com/ULL-ESIT-INF-DSI-2526/grp01-rickandmorty-datamodel-groupg/actions/workflows/ci.yml/badge.svg)](https://github.com/ULL-ESIT-INF-DSI-2526/grp01-rickandmorty-datamodel-groupg/actions/workflows/ci.yml)
+
