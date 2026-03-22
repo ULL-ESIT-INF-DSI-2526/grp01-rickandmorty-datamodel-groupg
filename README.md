@@ -23,3 +23,4 @@ npm start
 
 [![CI Tests](https://github.com/ULL-ESIT-INF-DSI-2526/grp01-rickandmorty-datamodel-groupg/actions/workflows/ci.yml/badge.svg)](https://github.com/ULL-ESIT-INF-DSI-2526/grp01-rickandmorty-datamodel-groupg/actions/workflows/ci.yml)
 
+[![Coverage Status](https://coveralls.io/repos/github/IkerMartinG/grp01-rickandmorty-datamodel-groupg/badge.svg?branch=main)](https://coveralls.io/github/IkerMartinG/grp01-rickandmorty-datamodel-groupg?branch=main)
