@@ -25,6 +25,32 @@ export class MultiverseManager {
     this.events = new MultiverseEvents(db);
   }
 
+
+
+   /**
+    * Deploys an invention in a specific location and persists the change.
+    *
+    * @param inventionId - Identifier of the invention.
+    * @param locationId - Identifier of the location.
+    */
+  public async deployInvention(inventionId: string, locationId: string): Promise<void> {
+    this.events.deployInvention(inventionId, locationId);
+    await this.events.save();
+  }
+
+
+  /**
+    * Neutralizes an invention in a specific location and persists the change.
+    *
+    * @param inventionId - Identifier of the invention.
+    * @param locationId - Identifier of the location.
+    */
+  public async neutralizeInvention(inventionId: string, locationId: string): Promise<void> {
+    this.events.neutralizeInvention(inventionId, locationId);
+    await this.events.save();
+  }
+
+
   /**
    * Returns the most intelligent characters ordered by intelligence.
    * Only the top 10 characters are included.
@@ -79,6 +105,9 @@ export class MultiverseManager {
     state: DimensionStatus,
     reason: string,
   ): Promise<void> {
+    if (!this.db.dimensions.getById(id)) {
+      throw new Error("Dimension doesnt exists.");
+    }
     if (state === "Destroyed") {
       this.events.destroyDimension(id);
     }
