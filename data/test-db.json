@@ -1,12 +1,31 @@
 {
-  "characters": [],
+  "characters": [
+    {
+      "id": "c1",
+      "name": "Rick",
+      "description": "",
+      "speciesId": "sp1",
+      "originDimensionId": "d1",
+      "status": "Alive",
+      "affiliation": "None",
+      "intelligence": 10,
+      "currentDimensionId": "d2"
+    }
+  ],
   "dimensions": [
     {
       "id": "d1",
       "name": "A",
       "description": "",
-      "status": "Destroyed",
+      "status": "Active",
       "techLevel": 5
+    },
+    {
+      "id": "d2",
+      "name": "B",
+      "description": "",
+      "status": "Active",
+      "techLevel": 6
     }
   ],
   "species": [],

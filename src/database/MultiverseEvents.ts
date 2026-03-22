@@ -56,6 +56,55 @@ export class MultiverseEvents {
   }
 
   /**
+   * Deploys an invention in a specific location.
+   * Registers the deployment event in the activity log.
+   *
+   * @param inventionId - Identifier of the invention to deploy.
+   * @param locationId - Identifier of the location where the invention is deployed.
+   */
+  deployInvention(inventionId: string, locationId: string): void {
+    const invention = this.db.inventions.getById(inventionId);
+    const location = this.db.locations.getById(locationId);
+
+
+    if (!invention) {
+      throw new Error("Invention not found");
+    }
+
+
+    if (!location) {
+      throw new Error("Location not found");
+    }
+
+
+    this.activityLog.push("Invention " + invention.name + " deployed at location " + location.name + "(" + location.id + ")" );
+  }
+
+
+  /**
+   * Neutralizes an invention in a specific location
+   * Registers the neutralization event in the activity log
+   *
+   * @param inventionId - Identifier of the invention to neutralize
+   * @param locationId - Identifier of the location where the invention is neutralized
+   */
+  neutralizeInvention(inventionId: string, locationId: string): void {
+    const invention = this.db.inventions.getById(inventionId);
+    const location = this.db.locations.getById(locationId);
+
+
+    if (!invention) {
+      throw new Error("Invention not found");
+    }
+
+    if (!location) {
+      throw new Error("Location not found");
+    }
+
+    this.activityLog.push( "Invention " + invention.name + " neutralized at location " + location.name + "(" + location.id + ")" );
+  }
+
+  /**
    * Returns the activity log.
    */
   getActivityLog(): string[] {
