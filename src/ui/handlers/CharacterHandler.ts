@@ -24,6 +24,10 @@ export class CharacterHandler implements IHandler {
       { type: "number", name: "intelligence", message: "Intelligence (1-10):" },
     ]);
 
+    if(data.intelligence < 1 || data.intelligence > 10){
+      throw new Error("Not a range in the inteligence");
+    }
+    
     if (!this.db.species.getById(data.speciesId)) {
       throw new Error("Species ID not found");
     }

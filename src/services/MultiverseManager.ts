@@ -204,4 +204,40 @@ export class MultiverseManager {
       mostAdvancedDimension: dimensions[0],
     };
   }
+
+  /**
+   * Detects destroyed dimensions and characters whose origin dimension no longer exists
+   *
+   * @returns An object containing lists of anomalies found in the multiverse
+   */
+  public getMultiverseConsistencyReport(): {
+    destroyed: { id: string; name: string }[];
+    orphans: { id: string; name: string; missingDim: string }[];
+  } {
+    const allDimensions = this.db.dimensions.getAll();
+    const allCharacters = this.db.characters.getAll();
+
+    const destroyed = allDimensions
+      .filter((dim) => {
+        return dim.status.toLowerCase() === "destroyed";
+      })
+      .map((dim) => {
+        return { id: dim.id, name: dim.name };
+      });
+
+    const orphans = allCharacters
+      .filter((char) => {
+        const originExists = this.db.dimensions.getById(char.originDimensionId);
+        return !originExists;
+      })
+      .map((char) => {
+        return {
+          id: char.id,
+          name: char.name,
+          missingDim: char.originDimensionId,
+        };
+      });
+
+    return { destroyed, orphans };
+  }
 }
