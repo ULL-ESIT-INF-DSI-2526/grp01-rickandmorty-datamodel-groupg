@@ -1,1 +1,22 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/U8NqX9JL)
+# Proyecto – Rick & Morty Multiverse Data Model
+
+El objetivo del proyecto es construir un pequeño sistema capaz de gestionar el multiverso de Rick & Morty: personajes, dimensiones, especies, localizaciones e inventos, además de registrar eventos y generar informes.
+
+## Miembros de grupo (Grupo G)
+
+* Iker Martín Gámez - alu0101556369
+* Samuel Megolla Expósito - alu0101567198
+* Fernando Sánchez Caiguaraico - alu0101848983
+
+## Modo de ejecución
+
+Instalar dependencias:
+```
+npm install
+```
+
+Ejecutar la aplicación:
+
+```
+npm start
+```
