@@ -7,7 +7,7 @@ import { Invention } from "../src/models/Invention.js";
 import fs from "fs";
 
 describe("SearchEngine Full Coverage Tests", () => {
-  const testDbPath = "data/test-coverage.json";
+  const testDbPath = "data/test-db.json";
   let db: DbManager;
   let searchEngine: SearchEngine;
 
@@ -16,7 +16,6 @@ describe("SearchEngine Full Coverage Tests", () => {
     db = new DbManager(testDbPath);
     searchEngine = new SearchEngine(db);
 
-    // Data for Character coverage
     db.characters.add(
       new Character("c1", "Rick", "Desc", "s1", "d1", "d2", "Alive", "Council", 10),
     );
@@ -27,13 +26,11 @@ describe("SearchEngine Full Coverage Tests", () => {
       new Character("c3", "Morty Clone", "Desc", "s2", "d2", "d4", "Dead", "None", 5),
     );
 
-    // Data for Location coverage
     db.locations.add(new Location("l1", "Earth", "Desc", "Planet", "d1", 7000));
     db.locations.add(
       new Location("l2", "Citadel", "Desc", "Station", "d2", 1000),
     );
 
-    // Data for Invention coverage
     db.inventions.add(
       new Invention("i1", "Portal Gun", "Desc", "c1", "Tool", 9),
     );

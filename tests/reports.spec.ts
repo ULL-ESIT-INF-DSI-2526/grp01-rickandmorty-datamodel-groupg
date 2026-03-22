@@ -8,7 +8,7 @@ import { Invention } from "../src/models/Invention.js";
 describe("Reports", () => {
 
   test("Get smartest characters returns ordered list", () => {
-    const db = new DbManager();
+    const db = new DbManager("data/test-db.json");
     const manager = new MultiverseManager(db);
 
     db.characters.add(new Character("1", "A", "", "sp1", "d1", "d1", "Alive", "None", 5));
@@ -22,7 +22,7 @@ describe("Reports", () => {
 
 
   test("Get dangerous dimensions returns ordered list", () => {
-    const db = new DbManager();
+    const db = new DbManager("data/test-db.json");
     const manager = new MultiverseManager(db);
 
     db.dimensions.add(new Dimension("1", "A", "", "Active", 5));
@@ -36,7 +36,7 @@ describe("Reports", () => {
 
 
   test("Get danger report returns inventions ordered by danger", () => {
-    const db = new DbManager();
+    const db = new DbManager("data/test-db.json");
     const manager = new MultiverseManager(db);
 
     db.inventions.add(new Invention("1", "A", "", "c1", "Tool", 5));
@@ -50,7 +50,7 @@ describe("Reports", () => {
 
 
   test("Get character history returns events", async () => {
-    const db = new DbManager();
+    const db = new DbManager("data/test-db.json");
     const manager = new MultiverseManager(db);
 
     const dim1 = new Dimension("d1", "A", "", "Active", 5);
@@ -72,7 +72,7 @@ describe("Reports", () => {
 
 
   test("Combined report returns data", () => {
-    const db = new DbManager();
+    const db = new DbManager("data/test-db.json");
     const manager = new MultiverseManager(db);
 
     db.characters.add(new Character("1", "A", "", "sp1", "d1", "d1", "Alive", "None", 10));
@@ -85,7 +85,7 @@ describe("Reports", () => {
   });
 
   test("Reports return empty when no data", () => {
-  const db = new DbManager();
+  const db = new DbManager("data/test-db.json");
   const manager = new MultiverseManager(db);
 
   expect(manager.getSmartestCharacters()).toEqual([]);
@@ -105,7 +105,7 @@ test("Character history is empty if no events", () => {
 });
 
 test("Handles equal intelligence values", () => {
-  const db = new DbManager();
+  const db = new DbManager("data/test-db.json");
   const manager = new MultiverseManager(db);
 
   db.characters.add(new Character("1", "A", "", "sp1", "d1", "d1", "Alive", "None", 5));
