@@ -8,7 +8,6 @@ import { text } from "node:stream/consumers";
  * repirt handler for handling the analytical reports interface
  */
 export class ReportHandler {
-
   constructor(private readonly manager: MultiverseManager) {}
 
   /**
@@ -22,8 +21,15 @@ export class ReportHandler {
       choices: [
         { title: "Active Dimensions Tech Level", value: "tech" },
         { title: "Character Alternative Versions Count", value: "versions" },
+        {
+          title: "Multiverse Consistency Check (Anomalies)",
+          value: "consistency",
+        }, // NUEVA OPCIÓN
         { title: "Character Registry", value: "registry" },
-        { title: "Most Dangerous Inventions Currently Deployed", value: "danger" },
+        {
+          title: "Most Dangerous Inventions Currently Deployed",
+          value: "danger",
+        },
         { title: "Back", value: "back" },
       ],
     });
@@ -61,6 +67,20 @@ export class ReportHandler {
       console.table(this.manager.getDangerReport());
     } else if (type === "registry") {
       await this.registryChar();
+    } else if (type === "consistency") {
+      const report = this.manager.getMultiverseConsistencyReport();
+      console.log("\n--- [DESTROYED DIMENSIONS] ---");
+      if (report.destroyed.length > 0) {
+        console.table(report.destroyed);
+      } else {
+        console.log("No destroyed dimensions found.");
+      }
+      console.log("\n--- [ORPHANED CHARACTERS] ---");
+      if (report.orphans.length > 0) {
+        console.table(report.orphans);
+      } else {
+        console.log("No orphaned characters found.");
+      }
     }
   }
 

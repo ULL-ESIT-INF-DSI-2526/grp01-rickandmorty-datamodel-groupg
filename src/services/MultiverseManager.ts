@@ -6,21 +6,19 @@ import { Dimension } from "../models/Dimension.js";
 import { Invention } from "../models/Invention.js";
 import { IMultiverseEvent } from "../interfaces/IMultiverseEvent.js";
 
-
 /**
  * Service layer responsible for managing multiverse operations.
- * 
+ *
  * This class acts as an intermediary between the CLI and the database,
  * delegating event logic to MultiverseEvents and providing
  * higher-level reports and analytics.
  */
 export class MultiverseManager {
-  
   private events: MultiverseEvents;
 
   /**
    * Creates a new MultiverseManager instance.
-   * 
+   *
    * @param db - Database manager used to access and persist data.
    */
   constructor(private readonly db: DbManager) {
@@ -30,7 +28,7 @@ export class MultiverseManager {
   /**
    * Returns the most intelligent characters ordered by intelligence.
    * Only the top 10 characters are included.
-   * 
+   *
    * @returns Array of the most intelligent characters.
    */
   public getSmartestCharacters(): Character[] {
@@ -38,12 +36,11 @@ export class MultiverseManager {
     return characters.slice(0, 10);
   }
 
-
   /**
    * Returns the most technologically advanced dimensions.
    * Higher tech level is interpreted as higher potential danger.
    * Only the top 10 dimensions are included.
-   * 
+   *
    * @returns Array of the most advanced dimensions.
    */
   public getDangerousDimensions(): Dimension[] {
@@ -51,44 +48,50 @@ export class MultiverseManager {
     return dimens.slice(0, 10);
   }
 
-
   /**
    * Registers a travel event for a character between dimensions.
    * Updates the character's origin dimension and persists the changes.
-   * 
+   *
    * @param charId - Identifier of the character.
    * @param destId - Identifier of the destination dimension.
    * @param reason - Reason for the travel (not stored).
    */
-  public async registerTravel(charId: string, destId: string, reason: string): Promise<void> {
+  public async registerTravel(
+    charId: string,
+    destId: string,
+    reason: string,
+  ): Promise<void> {
     this.events.interdimensionalTravel(charId, destId, reason);
-    await this.events.save(); 
+    await this.events.save();
   }
 
   /**
    * Updates the state of a dimension.
    * If the state is set to "Destroyed", the dimension is marked accordingly.
    * Changes are saved to the database.
-   * 
+   *
    * @param id - Identifier of the dimension.
    * @param state - New state of the dimension.
    * @param reason - Reason for the update (not stored).
    */
-  public async updateDimensionState(id: string, state: DimensionStatus, reason: string): Promise<void> {
+  public async updateDimensionState(
+    id: string,
+    state: DimensionStatus,
+    reason: string,
+  ): Promise<void> {
     if (state === "Destroyed") {
       this.events.destroyDimension(id);
-    } 
+    }
 
     await this.events.save();
   }
 
   /**
    * Generates a report of all dimensions including their average tech level.
-   * 
+   *
    * @returns Object containing the list of dimensions and the average tech level.
    */
-  public getTechReport(): { dimensions: any[], average: string } {
-
+  public getTechReport(): { dimensions: any[]; average: string } {
     const dimensions = this.db.dimensions.getAll();
     let total = 0;
 
@@ -100,40 +103,76 @@ export class MultiverseManager {
     return { dimensions, average };
   }
 
-
   /**
-   * Generates analytics of characters grouped by species.
-   * Counts how many characters belong to each species.
-   * 
-   * @returns Array with species names and number of characters per species.
+   * Generates a report of characters with the highest number of alternative versions
+   *
+   * @returns Array of objects with the identity name and the number of versions found
    */
-  public getVersionAnalytics(): { name: string, versions: number }[] {
-    const species = this.db.species.getAll();
+  public getVersionAnalytics(): { name: string; versions: number }[] {
     const characters = this.db.characters.getAll();
+    const versionMap = new Map<string, number>();
 
-    return species.map((s) => {
+    characters.forEach((char) => {
+      const nameParts = char.name.split(" ");
+      let baseName = nameParts[0];
 
-      const count = characters.filter(c => c.speciesId === s.id).length;
+      if (
+        baseName.toLowerCase().replace(".", "") === "mr" &&
+        nameParts.length > 1
+      ) {
+        baseName = nameParts[1];
+      }
 
-      return { name: s.name, versions: count };
+      const identity = baseName.trim();
 
+      const currentCount = versionMap.get(identity) || 0;
+      versionMap.set(identity, currentCount + 1);
+    });
+
+    const results = Array.from(versionMap.entries())
+      .map(([name, count]) => {
+        return { name: name, versions: count };
+      })
+      .filter((item) => {
+        return item.versions > 1;
+      });
+
+    return results.sort((a, b) => {
+      return b.versions - a.versions;
     });
   }
 
   /**
-   * Returns inventions ordered by their danger level.
-   * Higher danger level indicates higher relevance.
-   * 
-   * @returns Array of inventions sorted by danger level.
+   * create the report of the most dangerous inventions and their current location with the inventor dimention
+   * @returns Detailed report of inventions with level >= 7 and where they are
    */
-  public getDangerReport(): Invention[] {
-    return this.db.inventions.orderByDanger(true); 
+
+  public getDangerReport(): {
+    invention: string;
+    danger: number;
+    location: string;
+  }[] {
+    const inventions = this.db.inventions.getAll();
+
+    return inventions
+      .filter((inv) => inv.dangerLevel >= 7)
+      .map((inv) => {
+        const inventor = this.db.characters.getById(inv.inventorId);
+        const location = inventor ? inventor.originDimensionId : "Unknown";
+
+        return {
+          invention: inv.name,
+          danger: inv.dangerLevel,
+          location: location,
+        };
+      })
+      .sort((a, b) => b.danger - a.danger);
   }
 
   /**
    * Retrieves the history of events related to a character.
    * Filters the activity log and maps it to structured event objects.
-   * 
+   *
    * @param charId - Identifier of the character.
    * @returns Array of events associated with the character.
    */
@@ -141,26 +180,64 @@ export class MultiverseManager {
     const log = this.events.getActivityLog();
 
     return log
-      .filter(event => event.includes(charId))
-      .map(event => ({
+      .filter((event) => event.includes(charId))
+      .map((event) => ({
         timestamp: new Date().toISOString(),
         type: "TRAVEL",
         description: event,
-        subjectId: charId
+        subjectId: charId,
       }));
-
   }
 
   /**
    * Generates a combined report using multiple collections.
    * Includes the most intelligent character and the most advanced dimension.
-   * 
+   *
    * @returns Object with key information from characters and dimensions.
    */
   public getCombinedReport() {
     const characters = this.db.characters.orderByIntelligence(true);
     const dimensions = this.db.dimensions.orderByTechLevel(true);
 
-    return { smartestCharacter: characters[0], mostAdvancedDimension: dimensions[0] };
+    return {
+      smartestCharacter: characters[0],
+      mostAdvancedDimension: dimensions[0],
+    };
+  }
+
+  /**
+   * Detects destroyed dimensions and characters whose origin dimension no longer exists
+   *
+   * @returns An object containing lists of anomalies found in the multiverse
+   */
+  public getMultiverseConsistencyReport(): {
+    destroyed: { id: string; name: string }[];
+    orphans: { id: string; name: string; missingDim: string }[];
+  } {
+    const allDimensions = this.db.dimensions.getAll();
+    const allCharacters = this.db.characters.getAll();
+
+    const destroyed = allDimensions
+      .filter((dim) => {
+        return dim.status.toLowerCase() === "destroyed";
+      })
+      .map((dim) => {
+        return { id: dim.id, name: dim.name };
+      });
+
+    const orphans = allCharacters
+      .filter((char) => {
+        const originExists = this.db.dimensions.getById(char.originDimensionId);
+        return !originExists;
+      })
+      .map((char) => {
+        return {
+          id: char.id,
+          name: char.name,
+          missingDim: char.originDimensionId,
+        };
+      });
+
+    return { destroyed, orphans };
   }
 }
