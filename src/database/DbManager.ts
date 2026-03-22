@@ -1,5 +1,7 @@
 import { Low } from "lowdb";
 import { JSONFile } from "lowdb/node";
+import path from "path";
+import fs from "fs";
 
 import { ICharacter } from "../interfaces/ICharacter.js";
 import { IDimension } from "../interfaces/IDimension.js";
@@ -49,8 +51,12 @@ export class DbManager {
    * Creates a new database manager.
    * @param path - Path to the JSON file.
    */
-  constructor(path = "data/database.json") {
-    this.db = new Low<DbSchema>(new JSONFile(path), {
+  constructor(filePath = "data/database.json") {
+    const dir = path.dirname(filePath);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    this.db = new Low<DbSchema>(new JSONFile(filePath), {
       characters: [],
       dimensions: [],
       species: [],
