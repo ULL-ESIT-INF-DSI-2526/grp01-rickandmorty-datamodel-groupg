@@ -3,6 +3,7 @@ import { DbManager } from "../src/database/DbManager.js";
 import { MultiverseManager } from "../src/services/MultiverseManager.js";
 import { Character } from "../src/models/Character.js";
 import { Dimension } from "../src/models/Dimension.js";
+import { Invention } from "../src/models/Invention.js";
 import fs from "fs";
 
 if (!fs.existsSync("data")) {
@@ -135,4 +136,40 @@ describe("Events", () => {
 
     await expect(manager.registerTravel("c1", "d2", "test")).rejects.toThrow();
   });
+    
+  test("Deploy invention executes correctly", async () => {
+    const db = new DbManager("data/test-db.json");
+    const manager = new MultiverseManager(db);
+
+    db.inventions.add(new Invention("i1", "Portal Gun", "", "c1", "Tool", 8));
+    db.locations.add({ id: "l1", name: "Earth" } as any);
+
+    await manager.deployInvention("i1", "l1");
+
+    expect(db.inventions.getById("i1")).toBeDefined();
+  });
+
+  test("Neutralize invention executes correctly", async () => {
+    const db = new DbManager("data/test-db.json");
+    const manager = new MultiverseManager(db);
+
+    db.inventions.add(new Invention("i1", "Portal Gun", "", "c1", "Tool", 8));
+    db.locations.add({ id: "l1", name: "Earth" } as any);
+
+    await manager.neutralizeInvention("i1", "l1");
+
+    expect(db.inventions.getById("i1")).toBeDefined();
+  });
+
+  test("Deploy invention throws if invention does not exist", async () => {
+    const db = new DbManager("data/test-db.json");
+    const manager = new MultiverseManager(db);
+
+    db.locations.add({ id: "l1", name: "Earth" } as any);
+
+    await expect(
+      manager.deployInvention("fake", "l1")
+    ).rejects.toThrow();
+  });
+
 });
