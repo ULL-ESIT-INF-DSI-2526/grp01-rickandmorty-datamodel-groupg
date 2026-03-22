@@ -1,0 +1,44 @@
+{
+  "name": "grp01-rickandmorty-datamodel-groupg",
+  "version": "1.0.0",
+  "description": "[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/U8NqX9JL)",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc-watch --onSuccess \"node dist/index.js\"",
+    "test": "vitest run",
+    "doc": "typedoc",
+    "coverage": "vitest run --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ULL-ESIT-INF-DSI-2526/grp01-rickandmorty-datamodel-groupg.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/ULL-ESIT-INF-DSI-2526/grp01-rickandmorty-datamodel-groupg/issues"
+  },
+  "homepage": "https://github.com/ULL-ESIT-INF-DSI-2526/grp01-rickandmorty-datamodel-groupg#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "@types/lodash": "^4.17.24",
+    "@types/node": "^25.5.0",
+    "@types/prompts": "^2.4.9",
+    "@vitest/coverage-v8": "^4.1.0",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-tsdoc": "^0.5.2",
+    "globals": "^17.4.0",
+    "prettier": "^3.8.1",
+    "tsc-watch": "^7.2.0",
+    "typedoc": "^0.28.17",
+    "typescript-eslint": "^8.57.0",
+    "vitest": "^4.1.0"
+  },
+  "dependencies": {
+    "lowdb": "^7.0.1",
+    "prompts": "^2.4.2"
+  }
+}
