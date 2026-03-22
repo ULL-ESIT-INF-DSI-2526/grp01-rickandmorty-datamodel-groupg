@@ -4,9 +4,19 @@ import { MultiverseManager } from "../src/services/MultiverseManager.js";
 import { Character } from "../src/models/Character.js";
 import { Dimension } from "../src/models/Dimension.js";
 import { Invention } from "../src/models/Invention.js";
+import fs from "fs";
 
 describe("Reports", () => {
+
+  if(!fs.existsSync("data")){
+    fs.mkdirSync("data");
+  }
+  if(!fs.existsSync("data/test-db.json")){
+    fs.writeFileSync("data/test-db.json", "{}");
+  }
+
   test("Get smartest characters returns ordered list", () => {
+    
     const db = new DbManager("data/test-db.json");
     const manager = new MultiverseManager(db);
 

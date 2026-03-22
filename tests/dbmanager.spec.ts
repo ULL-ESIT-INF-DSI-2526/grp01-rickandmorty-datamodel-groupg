@@ -1,6 +1,3 @@
-/**
- * Tests for DbManager using raw model constructors.
- */
 import { describe, test, expect } from "vitest";
 import { DbManager } from "../src/database/DbManager.js";
 
@@ -13,12 +10,15 @@ import { Invention } from "../src/models/Invention.js";
 import fs from "fs";
 
 describe("DbManager", () => {
-  const testFile = "data/test-db.json";
-
-  if (fs.existsSync(testFile)) fs.unlinkSync(testFile);
+  if(!fs.existsSync("data")){
+    fs.mkdirSync("data");
+  }
+  if(!fs.existsSync("data/test-db.json")){
+    fs.writeFileSync("data/test-db.json", "{}");
+  }
 
   test("DbManager saves and loads data correctly", async () => {
-    const db = new DbManager(testFile);
+    const db = new DbManager("data/test-db.json");
 
     db.characters.add(
       new Character(
@@ -48,7 +48,7 @@ describe("DbManager", () => {
 
     await db.save();
 
-    const db2 = new DbManager(testFile);
+    const db2 = new DbManager("data/test-db.json");
     await db2.load();
 
     expect(db2.characters.getById("1")?.name).toBe("Rick");
