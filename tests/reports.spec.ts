@@ -4,20 +4,12 @@ import { MultiverseManager } from "../src/services/MultiverseManager.js";
 import { Character } from "../src/models/Character.js";
 import { Dimension } from "../src/models/Dimension.js";
 import { Invention } from "../src/models/Invention.js";
-import fs from "fs";
 
 describe("Reports", () => {
 
-  if(!fs.existsSync("data")){
-    fs.mkdirSync("data");
-  }
-  if(!fs.existsSync("data/test-db.json")){
-    fs.writeFileSync("data/test-db.json", "{}");
-  }
-
   test("Get smartest characters returns ordered list", () => {
     
-    const db = new DbManager("data/test-db.json");
+    const db = new DbManager("/tmp/test-db.json");
     const manager = new MultiverseManager(db);
 
     db.characters.add(
@@ -36,7 +28,7 @@ describe("Reports", () => {
   });
 
   test("Get dangerous dimensions returns ordered list", () => {
-    const db = new DbManager("data/test-db.json");
+    const db = new DbManager("/tmp/test-db.json");
     const manager = new MultiverseManager(db);
 
     db.dimensions.add(new Dimension("1", "A", "", "Active", 5));
@@ -49,7 +41,7 @@ describe("Reports", () => {
   });
 
   test("Get danger report returns inventions ordered by danger", () => {
-    const db = new DbManager("data/test-db.json");
+    const db = new DbManager("/tmp/test-db.json");
     const manager = new MultiverseManager(db);
 
     db.inventions.add(new Invention("1", "A", "", "c1", "Tool", 7));
@@ -62,7 +54,7 @@ describe("Reports", () => {
   });
 
   test("Tech report calculates correct average", () => {
-    const db = new DbManager("data/test-db.json");
+    const db = new DbManager("/tmp/test-db.json");
     const manager = new MultiverseManager(db);
 
     db.dimensions.add(new Dimension("1", "A", "", "Active", 5));
@@ -75,7 +67,7 @@ describe("Reports", () => {
   });
 
   test("Get character history returns events", async () => {
-    const db = new DbManager("data/test-db.json");
+    const db = new DbManager("/tmp/test-db.json");
     const manager = new MultiverseManager(db);
 
     const dim1 = new Dimension("d1", "A", "", "Active", 5);
@@ -106,7 +98,7 @@ describe("Reports", () => {
   });
 
   test("Version analytics detects multiple versions", () => {
-    const db = new DbManager("data/test-db.json");
+    const db = new DbManager("/tmp/test-db.json");
     const manager = new MultiverseManager(db);
 
     db.characters.add(
@@ -137,7 +129,7 @@ describe("Reports", () => {
   });
 
   test("Danger report sets location to Unknown if inventor not found", () => {
-    const db = new DbManager("data/test-db.json");
+    const db = new DbManager("/tmp/test-db.json");
     const manager = new MultiverseManager(db);
 
     db.inventions.add(new Invention("1", "Laser", "", "nope", "Tool", 9));
@@ -148,7 +140,7 @@ describe("Reports", () => {
   });
 
   test("Combined report returns data", () => {
-    const db = new DbManager("data/test-db.json");
+    const db = new DbManager("/tmp/test-db.json");
     const manager = new MultiverseManager(db);
 
     db.characters.add(
@@ -163,7 +155,7 @@ describe("Reports", () => {
   });
 
   test("Reports return empty when no data", () => {
-    const db = new DbManager("data/test-db.json");
+    const db = new DbManager("/tmp/test-db.json");
     const manager = new MultiverseManager(db);
 
     expect(manager.getSmartestCharacters()).toEqual([]);
@@ -172,7 +164,7 @@ describe("Reports", () => {
   });
 
   test("Character history is empty if no events", () => {
-    const db = new DbManager();
+    const db = new DbManager("/tmp/test-db.json");
     const manager = new MultiverseManager(db);
 
     db.characters.add(
@@ -186,7 +178,7 @@ describe("Reports", () => {
   
 
   test("Handles equal intelligence values", () => {
-    const db = new DbManager("data/test-db.json");
+    const db = new DbManager("/tmp/test-db.json");
     const manager = new MultiverseManager(db);
 
     db.characters.add(

@@ -3,19 +3,10 @@ import { DbManager } from "../src/database/DbManager.js";
 import { MultiverseManager } from "../src/services/MultiverseManager.js";
 import { Character } from "../src/models/Character.js";
 import { Dimension } from "../src/models/Dimension.js";
-import fs from "fs";
-
-if (!fs.existsSync("data")) {
-  fs.mkdirSync("data");
-}
-
-if (!fs.existsSync("data/test-db.json")) {
-  fs.writeFileSync("data/test-db.json", "{}");
-}
 
 describe("Events", () => {
   test("Register travel updates current dimension and history", async () => {
-    const db = new DbManager("data/test-db.json");
+    const db = new DbManager("/tmp/test-db.json");
     const manager = new MultiverseManager(db);
 
     const dim1 = new Dimension("d1", "A", "", "Active", 5);
@@ -48,7 +39,7 @@ describe("Events", () => {
   });
 
   test("Destroy dimension changes status if empty", async () => {
-    const db = new DbManager("data/test-db.json");
+    const db = new DbManager("/tmp/test-db.json");
     const manager = new MultiverseManager(db);
 
     const dim = new Dimension("d1", "A", "", "Active", 5);
@@ -62,7 +53,7 @@ describe("Events", () => {
   });
 
   test("Cannot destroy dimension with characters inside", async () => {
-    const db = new DbManager("data/test-db.json");
+    const db = new DbManager("/tmp/test-db.json");
     const manager = new MultiverseManager(db);
 
     const dim = new Dimension("d1", "A", "", "Active", 5);
@@ -87,7 +78,7 @@ describe("Events", () => {
   });
 
   test("Throws if character does not exist", async () => {
-    const db = new DbManager("data/test-db.json");
+    const db = new DbManager("/tmp/test-db.json");
     const manager = new MultiverseManager(db);
 
     db.dimensions.add(new Dimension("d1", "A", "", "Active", 5));
@@ -98,7 +89,7 @@ describe("Events", () => {
   });
 
   test("Throws if dimension does not exist", async () => {
-    const db = new DbManager("data/test-db.json");
+    const db = new DbManager("/tmp/test-db.json");
     const manager = new MultiverseManager(db);
 
     db.characters.add(
@@ -111,7 +102,7 @@ describe("Events", () => {
   });
 
   test("Cannot travel to destroyed dimension", async () => {
-    const db = new DbManager("data/test-db.json");
+    const db = new DbManager("/tmp/test-db.json");
     const manager = new MultiverseManager(db);
 
     const dim1 = new Dimension("d1", "A", "", "Active", 5);

@@ -7,12 +7,11 @@ import { Invention } from "../src/models/Invention.js";
 import fs from "fs";
 
 describe("SearchEngine Full Coverage Tests", () => {
-  const testDbPath = "data/test-db.json";
+  const testDbPath = "/tmp/test-db.json";
   let db: DbManager;
   let searchEngine: SearchEngine;
 
   beforeEach(async () => {
-    if (!fs.existsSync("data")) fs.mkdirSync("data");
     db = new DbManager(testDbPath);
     searchEngine = new SearchEngine(db);
 
