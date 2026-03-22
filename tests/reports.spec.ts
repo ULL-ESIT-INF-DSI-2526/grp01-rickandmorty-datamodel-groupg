@@ -39,13 +39,13 @@ describe("Reports", () => {
     const db = new DbManager("data/test-db.json");
     const manager = new MultiverseManager(db);
 
-    db.inventions.add(new Invention("1", "A", "", "c1", "Tool", 5));
+    db.inventions.add(new Invention("1", "A", "", "c1", "Tool", 7));
     db.inventions.add(new Invention("2", "B", "", "c1", "Tool", 10));
 
     const result = manager.getDangerReport();
 
     expect(result.length).toBeGreaterThan(0);
-    expect(result[0].dangerLevel).toBeGreaterThanOrEqual(result[1].dangerLevel);
+    expect(result[0].danger).toBeGreaterThanOrEqual(result[1].danger);
   });
 
 
